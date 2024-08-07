@@ -28,7 +28,7 @@ const TrainingLoadHistogram = () => {
   const [daysToShow, setDaysToShow] = useState('14');
 
   useEffect(() => {
-    fetch(`https://myo6.duckdns.org/api/${window.location.href.split("=")[1]}/get_training_load_data`)
+    fetch(`https://myo6-web.duckdns.org/api/${window.location.href.split("=")[1]}/get_training_load_data`)
       .then(response => response.text())
       .then(text => {
         const validJSONString = text.replace(/:\s*NaN/g, ': null');

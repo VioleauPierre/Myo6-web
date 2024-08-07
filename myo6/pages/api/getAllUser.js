@@ -17,7 +17,7 @@ export default function handler(req, res) {
     };     
  
 
-    fetch("https://myo6.duckdns.org/api/get_user_data_table", requestOptions)
+    fetch("https://myo6-web.duckdns.org/api/get_user_data_table", requestOptions)
       .then(response => response.json())
       .then(result => res.status(200).json(result))
       .catch(error => console.log('error', error));

@@ -36,7 +36,7 @@ export default function VideoUpload() {
       formData.append('file', videoFile)
       formData.append('video_path', path);
 
-      const response = await fetch('https://myo6.duckdns.org/upload/video_web', {
+      const response = await fetch('https://myo6-web.duckdns.org/upload/video_web', {
         method: 'POST',
         body: formData,
       })

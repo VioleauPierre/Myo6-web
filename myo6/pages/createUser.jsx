@@ -57,7 +57,7 @@ export default function Home({  }) {
     let date1 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
 
-    const url_upload_form = 'https://myo6.duckdns.org/api/create_user';
+    const url_upload_form = 'https://myo6-web.duckdns.org/api/create_user';
     const data_form = {
       // 'firstname' : 'Prénom',
       // 'lastname' : 'Nom',

@@ -57,7 +57,7 @@ export default function Home({  }) {
     let date1 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
 
 
-    const url_upload_form = 'https://myo6.duckdns.org/upload/activity';
+    const url_upload_form = 'https://myo6-web.duckdns.org/upload/activity';
     const data_form = {
       'id_user' : 19,
       'distance' : 1,

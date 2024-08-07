@@ -9,7 +9,7 @@ export default function Home(props) {
   if (props.DEBUG_MODE === 'true') {
     baseUrl = "http://localhost:3000/";
   } else {
-    baseUrl = "https://myo6.vercel.app/";
+    baseUrl = "https://myo6-web.vercel.app/";
   }
 
   const [userId, setUserId] = useState();
@@ -68,7 +68,7 @@ export default function Home(props) {
   async function getActivities() {
     if (userId) {
       try {
-      const res = await fetch(`https://myo6.duckdns.org/api/${userId}/get_list_activity`, {
+      const res = await fetch(`https://myo6-web.duckdns.org/api/${userId}/get_list_activity`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ export default function Home(props) {
     
     if (index !== "") {
       const activityId = activities.id_activity_list[index];
-      const res = await fetch(`https://myo6.duckdns.org/api/${activityId}/get_activity_data`, {
+      const res = await fetch(`https://myo6-web.duckdns.org/api/${activityId}/get_activity_data`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ export default function Home(props) {
     setSubmissionMessage('');
     
     const activityId = activities.id_activity_list[selectedActivity];
-    const url = `https://myo6.duckdns.org/api/${activityId}/add_rpe`;
+    const url = `https://myo6-web.duckdns.org/api/${activityId}/add_rpe`;
     console.log(activityId, selectedActivityRpe);
 
   
@@ -218,7 +218,7 @@ export default function Home(props) {
 
     const formattedDate = selectedStartDate.replace('T', ' ');
 
-    const url_upload_activity = `https://myo6.duckdns.org/upload/activity`;
+    const url_upload_activity = `https://myo6-web.duckdns.org/upload/activity`;
     const data_activity = {
       "id_user": userId,
       "type": selectedType,

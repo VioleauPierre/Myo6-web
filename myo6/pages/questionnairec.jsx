@@ -13,7 +13,7 @@ export default function Home(props) {
     baseUrl = "http://localhost:3000/";
     console.log("DEBUG_MODE");
   } else {
-    baseUrl = "https://myo6.vercel.app/";
+    baseUrl = "https://myo6-web.vercel.app/";
     console.log(baseUrl);
   }
 
@@ -194,7 +194,7 @@ export default function Home(props) {
     const lfs = parseFloat(lfStanding);
     const hfs = parseFloat(hfStanding);
 
-    const url_upload_form = 'https://myo6.duckdns.org/upload/form';
+    const url_upload_form = 'https://myo6-web.duckdns.org/upload/form';
     const data_form = {
       "id_user": selectedValue,
       "date_record":Date2,

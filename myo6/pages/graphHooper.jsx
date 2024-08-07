@@ -27,7 +27,7 @@ export default function Home(props) {
     baseUrl = "http://localhost:3000/";
     console.log("DEBUG_MODE");
   } else {
-    baseUrl = "https://myo6.vercel.app/";
+    baseUrl = "https://myo6-web.vercel.app/";
     console.log(baseUrl);
   }
 

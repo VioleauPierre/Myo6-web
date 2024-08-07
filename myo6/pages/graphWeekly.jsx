@@ -18,7 +18,7 @@ const ComboChart = () => {
         }
         setIdUser(window.location.href.split("=")[1]);
 
-        const response = await fetch(`https://myo6.duckdns.org/api/${idUser}/${selectedOption}/weekly_plot`);
+        const response = await fetch(`https://myo6-web.duckdns.org/api/${idUser}/${selectedOption}/weekly_plot`);
 
         if (!response.ok) {
           setError('Pas de données'); // Lien invalide
