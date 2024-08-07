@@ -1,1 +1,1 @@
-# Myo6-web
+# Myo6
