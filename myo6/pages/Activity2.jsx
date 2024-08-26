@@ -199,25 +199,25 @@ export default function Home(props) {
 
   const handleSubmitNewActivity = async (e) => {
     e.preventDefault();
-
+  
     setErrorMessage('');
     setSubmissionMessage('');
-    
+  
     if (!selectedType || !selectedStartDate || !selectedElapsedTime) {
       setErrorMessage('Veuillez remplir tous les champs obligatoires');
       return;
     }
-
+  
     setErrorMessage('');
-
+  
     const convertValue = (value, converter) => {
       if (value === '' || value === undefined || value === null) return null;
       const result = converter(value);
       return isNaN(result) ? null : result;
     };
-
+  
     const formattedDate = selectedStartDate.replace('T', ' ');
-
+  
     const url_upload_activity = `https://myo6.duckdns.org/upload/activity`;
     const data_activity = {
       "id_user": userId,
@@ -235,7 +235,7 @@ export default function Home(props) {
       "rpe": selectedRpe === 0 ? null : selectedRpe
     };
     console.log('data_activity:', data_activity);
-
+  
     try {
       const response = await fetch(url_upload_activity, {
         method: 'POST',
@@ -244,29 +244,35 @@ export default function Home(props) {
         },
         body: JSON.stringify(data_activity),
       });
-
+  
       if (response.ok) {
         setSubmissionMessage("L'activité a été enregistrée avec succès.");
-        //setShowNewActivityForm(false);
-        // Réinitialiser tous les champs
-        setSelectedType(null);
-        setSelectedStartDate(null);
-        setSelectedDistance(null);
-        setSelectedElapsedTime(null);
-        setSelectedAverageSpeed(null);
-        setSelectedAverageHeartrate(null);
-        setSelectedMaxHeartrate(null);
-        setSelectedTotalElevationGain(null);
-        setSelectedAverageWatts(null);
-        setSelectedMaxWatts(null);
-        setSelectedAverageCadence(null);
-        setSelectedRpe(0);
-        setSelectedActivity('');
-        setActivityDetails(null);
-        await getActivities();
-        setTimeout(() => {
-          setSubmissionMessage('');
-        }, 3000);
+  
+        // Delay for 1 second before resetting the form
+        setTimeout(async () => {
+          // Réinitialiser tous les champs
+          setSelectedType('');
+          setSelectedStartDate('');
+          setSelectedDistance('');
+          setSelectedElapsedTime('');
+          setSelectedAverageSpeed('');
+          setSelectedAverageHeartrate('');
+          setSelectedMaxHeartrate('');
+          setSelectedTotalElevationGain('');
+          setSelectedAverageWatts('');
+          setSelectedMaxWatts('');
+          setSelectedAverageCadence('');
+          setSelectedRpe(0);
+          setActivityDetails(null);
+  
+          // Fetch new activities
+          await getActivities();
+  
+          // Clear the submission message after 3 seconds
+          setTimeout(() => {
+            setSubmissionMessage('');
+          }, 3000);
+        }, 1000);
       } else {
         setErrorMessage("Une erreur s'est produite lors de l'enregistrement de l'activité");
       }
@@ -298,12 +304,6 @@ export default function Home(props) {
                     </option>
                   ))}
                 </select>
-                  <button 
-                    onClick={() => setShowNewActivityForm(!showNewActivityForm)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  >
-                    {showNewActivityForm ? 'Annuler' : '+'}
-                  </button>
                   <button 
                     onClick={() => setShowNewActivityForm(!showNewActivityForm)}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
