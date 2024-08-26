@@ -67,15 +67,15 @@ export default function Home(props) {
     setSelectedOptionMenstruation(null);
     setSelectedOptionTravel('0');
     setSelectedOptionSickness('0');
-    setRmssdLying(null);
-    setLnrmssdLying(null);
-    setLfLying(null);
-    setHfLying(null);
-    setRmssdStanding(null);
-    setLnrmssdStanding(null);
-    setLfStanding(null);
-    setHfStanding(null);
-    setFcr(null);
+    setRmssdLying('');
+    setLnrmssdLying('');
+    setLfLying('');
+    setHfLying('');
+    setRmssdStanding('');
+    setLnrmssdStanding('');
+    setLfStanding('');
+    setHfStanding('');
+    setFcr('');
     setRecoveryState(50);
     setSelectedWeight('');
     setSelectedAsleepTime('');
@@ -161,16 +161,13 @@ export default function Home(props) {
     clearMessages();
 
     if (!isFormValid()) {
-      setErrorMessage('Veuillez remplir tous les champs');
-      return;
+        setErrorMessage('Veuillez remplir tous les champs');
+        return;
     }
-  
+
     setErrorMessage('');
 
-
-    
-    // let date = new Date();
-    // let date1 = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    // Convert values
     const sleepQuality = parseInt(selectedOptionSleepQuality, 10);
     const trainLastDay = parseInt(selectedOptionTrainLastDay, 10);
     const trainPerf = parseInt(selectedOptionTrainPerf, 10);
@@ -196,62 +193,65 @@ export default function Home(props) {
 
     const url_upload_form = 'https://myo6.duckdns.org/upload/form';
     const data_form = {
-      "id_user": selectedValue,
-      "date_record":Date2,
-    //"date_record": "2024-03-27",
-      "sleep_quality": sleepQuality,
-      // "asleep_time": "23:15",
-      // "wakeup_time": "07:35",
-      "asleep_time": selectedAsleepTime,
-      "wakeup_time": selectedWakeupTime,
-      "sleep_time": sleeptime,
-      "weight": weight,
-      "rmssd_lying": rmssdl,
-      "lnrmssd_lying": lnrmssdl,
-      "lf_lying": lfl,
-      "hf_lying": hfl,
-      "rmssd_standing": rmssds,
-      "lnrmssd_standing": lnrmssds,
-      "lf_standing": lfs,
-      "hf_standing": hfs,
-      "hr_rest": parseInt(fcr, 10),
-      "prs_100": parseInt(recoveryState, 10),
-      "train_lastday": trainLastDay,
-      "train_perf": trainPerf,
-      "phys_cond": physCond,
-      "stress": stress,
-      "muscle_sore": muscleSore,
-      "fatigue_subj": fatigueSubj,
-      "injuried": injuried,
-      "alcohol": alcohol,
-      "menstruation": menstruation,
-      "travel": travel,
-      "sickness": sickness
+        "id_user": selectedValue,
+        "date_record": Date2,
+        "sleep_quality": sleepQuality,
+        "asleep_time": selectedAsleepTime,
+        "wakeup_time": selectedWakeupTime,
+        "sleep_time": sleeptime,
+        "weight": weight,
+        "rmssd_lying": rmssdl,
+        "lnrmssd_lying": lnrmssdl,
+        "lf_lying": lfl,
+        "hf_lying": hfl,
+        "rmssd_standing": rmssds,
+        "lnrmssd_standing": lnrmssds,
+        "lf_standing": lfs,
+        "hf_standing": hfs,
+        "hr_rest": parseInt(fcr, 10),
+        "prs_100": parseInt(recoveryState, 10),
+        "train_lastday": trainLastDay,
+        "train_perf": trainPerf,
+        "phys_cond": physCond,
+        "stress": stress,
+        "muscle_sore": muscleSore,
+        "fatigue_subj": fatigueSubj,
+        "injuried": injuried,
+        "alcohol": alcohol,
+        "menstruation": menstruation,
+        "travel": travel,
+        "sickness": sickness
     };
     console.log(data_form);
 
-
-
-
     try {
-      const response = await fetch(url_upload_form, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data_form),
-      });
+        const response = await fetch(url_upload_form, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data_form),
+        });
 
-      if (response.ok) {
-        setSubmissionMessage('Le questionnaire a été envoyé avec succès.');
-      } else {
-        setErrorMessage('Une erreur s\'est produite lors de l\'envoi du questionnaire');
-      }
+        if (response.ok) {
+            setSubmissionMessage('Le questionnaire a été envoyé avec succès.');
+
+            // Delay for 1 second before resetting the form
+            setTimeout(() => {
+                setVar(); // Call the setVar function to reset the form
+            }, 1000);
+
+        } else {
+            setErrorMessage('Une erreur s\'est produite lors de l\'envoi du questionnaire');
+        }
     } catch (error) {
-      console.error('Erreur:', error);
-      setErrorMessage('Une erreur s\'est produite lors de l\'envoi du questionnaire');
+        console.error('Erreur:', error);
+        setErrorMessage('Une erreur s\'est produite lors de l\'envoi du questionnaire');
     }
-  };
+};
+
+
+
 
   return (
     <>
