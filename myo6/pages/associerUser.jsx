@@ -28,7 +28,7 @@ export default function Home(props) {
 
   const getUserId = async () => {
     try {
-      const response = await fetch('https://myo6-web.duckdns.org/api/get_user_data_table');
+      const response = await fetch('https://myo6.duckdns.org/api/get_user_data_table');
       if (response.ok) {
         const users = await response.json();
         const user = users.find(u => u.email === email && u.password === password);
@@ -49,7 +49,7 @@ export default function Home(props) {
   };
 
   const associateDevice = async (userId) => {
-    const url_upload_form = 'https://myo6-web.duckdns.org/api/associate';
+    const url_upload_form = 'https://myo6.duckdns.org/api/associate';
     const data_form = {
       'id_user': userId,
       'serial_number': serialNumber

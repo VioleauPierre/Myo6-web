@@ -43,7 +43,7 @@ export default function Home(props) {
 
   async function getActivities() {
     if (userId) {
-      const res = await fetch(`https://myo6-web.duckdns.org/api/${userId}/get_list_activity`, {
+      const res = await fetch(`https://myo6.duckdns.org/api/${userId}/get_list_activity`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export default function Home(props) {
     
     if (index !== "") {
       const activityId = activities.id_activity_list[index];
-      const res = await fetch(`https://myo6-web.duckdns.org/api/${activityId}/get_activity_data`, {
+      const res = await fetch(`https://myo6.duckdns.org/api/${activityId}/get_activity_data`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ export default function Home(props) {
     e.preventDefault();
     try {
       const activityWithRpe = { ...newActivity, rpe: rpe };
-      const res = await fetch('https://myo6-web.duckdns.org/api/upload/activity', {
+      const res = await fetch('https://myo6.duckdns.org/api/upload/activity', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

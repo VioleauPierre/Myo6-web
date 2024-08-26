@@ -20,7 +20,7 @@ export default function handler(req, res) {
       };     
    
   
-      fetch("https://myo6-web.duckdns.org/api/"+id_user+"/data_score_plot", requestOptions)
+      fetch("https://myo6.duckdns.org/api/"+id_user+"/data_score_plot", requestOptions)
         .then(response => response.json())
         .then(result => res.status(200).json(result))
         .catch(error => console.log('error', error));

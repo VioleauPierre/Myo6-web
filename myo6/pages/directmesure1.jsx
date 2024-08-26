@@ -373,7 +373,7 @@ export default function Home(props) {
                   <div className=" m-4  flex justify-center items-center justify-items-center w-1/3 ">
                     <div className="text-xl font-bold text-[#082431] bg-white rounded-none shadow-xl border-2 w-full  border-gray-400 flex justify-center items-center justify-items-center">
                       <video  autoPlay muted>
-                        <source src="https://myo6-web.duckdns.org/api/video/last_video/video_traitement.mp4?t=${new Date().getTime()}" width="auto"/>
+                        <source src="https://myo6.duckdns.org/api/video/last_video/video_traitement.mp4?t=${new Date().getTime()}" width="auto"/>
                         </video>   
                     </div>
                   </div>

@@ -94,7 +94,7 @@ export default function Home(props) {
     const travel = parseInt(selectedOptionTravel, 10);
     const sickness = parseInt(selectedOptionSickness, 10);
 
-    const url_upload_form = 'https://myo6-web.duckdns.org/upload/form';
+    const url_upload_form = 'https://myo6.duckdns.org/upload/form';
     const data_form = {
       "id_user": selectedValue,
      // "date_record":date1,

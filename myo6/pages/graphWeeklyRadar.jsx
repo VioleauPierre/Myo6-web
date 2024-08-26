@@ -19,7 +19,7 @@ const RadarChart = () => {
         }
         setIdUser(window.location.href.split("=")[1]);
 
-        const response = await fetch(`https://myo6-web.duckdns.org/api/${idUser}/spider_plot`);
+        const response = await fetch(`https://myo6.duckdns.org/api/${idUser}/spider_plot`);
 
         if (!response.ok) {
           setError('Pas de données'); // Lien invalide
