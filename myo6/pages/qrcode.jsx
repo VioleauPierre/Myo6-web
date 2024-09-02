@@ -1,3 +1,4 @@
+import withAuth from '../components/withAuth';
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
@@ -14,7 +15,7 @@ import { useState } from 'react'
 import QRCode from 'qrcode.react';
 
 
-export default function Home({  }) {
+function Home({  }) {
 
 
     const [ssid, setSsid] = useState('');
@@ -123,3 +124,5 @@ export default function Home({  }) {
     </>
   )
 }
+// Wrap the Home component with withAuth before exporting
+export default withAuth(Home);

@@ -1,3 +1,4 @@
+import withAuth from '../components/withAuth';
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '@/styles/Home.module.css'
@@ -12,7 +13,7 @@ import { Component } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-export default function Home(props) {
+function Home(props) {
   let baseUrl = "s";
   if (props.DEBUG_MODE === 'true') {
     baseUrl = "http://localhost:3000/";
@@ -1182,3 +1183,5 @@ export async function getServerSideProps() {
     props: { DEBUG_MODE: process.env.DEBUG_MODE },
   };
 }
+// Wrap the Home component with withAuth before exporting
+export default withAuth(Home);

@@ -1,3 +1,4 @@
+import withAuth from '../components/withAuth';
 import Header from '../components/Header'
 import Navbar from '../components/Navbar'
 import SideBar from '../components/SideBar'
@@ -5,7 +6,7 @@ import SideBar from '../components/SideBar'
 import { useEffect } from 'react'
 import { useState } from 'react'
 
-export default function Home(props) {
+function Home(props) {
 
   let baseUrl = "s";
   if (props.DEBUG_MODE === 'true') {
@@ -200,3 +201,6 @@ console.log(process.env.DEBUG_MODE);
     props: { DEBUG_MODE: process.env.DEBUG_MODE },
   };
 }
+
+// Wrap the Home component with withAuth before exporting
+export default withAuth(Home);

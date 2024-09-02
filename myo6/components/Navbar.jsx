@@ -45,7 +45,7 @@ export default function Navbar() {
 
                     <Link href="/About" className="text-white text-sm sm:text-xl pr-2 sm:pr-5">A propos</Link>
 
-                    <Link href="/Login" className="h-full">
+                    <Link href="/Login_secure" className="h-full">
 
                         <img src="/assets/icons/user.svg" alt="Logo" className="h-full rounded-md mr-1 sm:mr-5" />
 
