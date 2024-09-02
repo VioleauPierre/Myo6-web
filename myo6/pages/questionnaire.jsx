@@ -1183,5 +1183,6 @@ export async function getServerSideProps() {
     props: { DEBUG_MODE: process.env.DEBUG_MODE },
   };
 }
-// Wrap the Home component with withAuth before exporting
+Home.displayName = 'Home';
+
 export default withAuth(Home);

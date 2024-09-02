@@ -124,5 +124,6 @@ function Home({  }) {
     </>
   )
 }
-// Wrap the Home component with withAuth before exporting
+Home.displayName = 'Home';
+
 export default withAuth(Home);
