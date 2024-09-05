@@ -46,7 +46,7 @@ export default function LoginPage(props) {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem('token', data.token);
+        sessionStorage.setItem('token', data.token);
         router.push(`/coachPage?id_user=${data.id_user}`); // Redirigez l'utilisateur vers la page protégée
       } else {
         setErrorMessage('Email ou mot de passe incorrect');
