@@ -138,4 +138,4 @@ export async function getServerSideProps() {
 
 Home.displayName = 'Home';
 
-export default withAuth(Home);
+export default withAuth(Home,['admin']);

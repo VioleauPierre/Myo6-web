@@ -1,62 +1,75 @@
 import withAuth from '../components/withAuth';
-import Header from '../components/Header'
-import Navbar from '../components/Navbar'
-import SideBar from '../components/SideBar'
-
-import { useEffect } from 'react'
-import { useState } from 'react'
+import Header from '../components/Header';
+import Navbar from '../components/Navbar';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 function Home(props) {
+  const router = useRouter();
+  const { id_user } = router.query; // get the user id from the URL
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserRole, setCurrentUserRole] = useState(null); // Store the user's role
 
-  let baseUrl = "s";
-  if (props.DEBUG_MODE === 'true') {
-    baseUrl = "http://localhost:3000/";
-    console.log("DEBUG_MODE");
-  } else {
-    baseUrl = "https://myo6-web.vercel.app/";
-    console.log(baseUrl);
-  }
+  const baseUrl = props.DEBUG_MODE === 'true' ? "http://localhost:3000/" : "https://myo6-web.vercel.app/";
 
   const [users, setUsers] = useState([]);
   const [videos, setVideo] = useState([]);
   const [selectedValue, setSelectedValue] = useState(0);
   const [selectedValueMeasure, setSelectedValueMeasure] = useState(0);
-  const [currentUserid, setCurrentUserid] = useState(0);
-
-  // const [isDataLoaded, setIsDataLoaded] = useState(false); QUENTIN
-
   const [isBilanSelected, setIsBilanSelected] = useState(true);
   const [isVideo, setIsVideo] = useState(true);
   const [newTabSelected, setNewTabSelected] = useState(false);
   const [isQuestionnaireSelected, setIsQuestionnaireSelected] = useState(false);
 
-//récupérer les utilisateurs
+  // Retrieve the logged-in user ID and role (for example from session storage)
+  useEffect(() => {
+    const loggedInUserId = sessionStorage.getItem('id_user');
+    const loggedInUserRole = sessionStorage.getItem('role'); // Retrieve the role of the user
+    setCurrentUserId(loggedInUserId);
+    setCurrentUserRole(loggedInUserRole);
+
+    // Ensure the logged-in athlete can only access their own data
+    if (loggedInUserId && id_user && loggedInUserId !== id_user && loggedInUserRole !== 'admin') {
+      alert("You are not authorized to access this page.");
+      router.replace(`/coachPage?id_user=${loggedInUserId}`); // redirect them to their own page
+    }
+  }, [id_user, router]);
+
+  // Fetch user data
   async function getUser() {
     const res = await fetch(baseUrl + 'api/getAllUser', {});
-    //const res = await fetch('http://localhost:3000/api/getUsers_Test', {});
-
     const data = await res.json();
-    setUsers(data);
-  }
+    const loggedInUserId = Number(sessionStorage.getItem('id_user'));
+    const loggedInUserRole = sessionStorage.getItem('role'); // Retrieve the role of the user
+    setCurrentUserId(loggedInUserId);
+    setCurrentUserRole(loggedInUserRole);
+
+    if (loggedInUserRole !== 'admin') {
+        // Set a single user based on `currentUserId` in an array
+        setUsers([data.find(user => user.id_user === loggedInUserId)]);
+    } else {
+        // Set all users if the condition is not met
+        setUsers(data);
+    }
+}
+
+  // Initial data loading and validation
+  useEffect(() => {
+    if (id_user) {
+      setSelectedValue(id_user);
+      setSelectedValueMeasure(0);
+      setVideo([]);
+      getUser();
+    }
+  }, [id_user]);
 
   const handleSelectChange = (event) => {
     const selectedOption = event.target.value;
     setSelectedValue(selectedOption);
     setVideo([]);
-    // getVideo(selectedOption);
   };
 
-  //initialisation des données de la page
-  useEffect(() => {
-    if (window.location.href.split("=")[1] == undefined) {
-    } else {
-      setCurrentUserid(window.location.href.split("=")[1])
-      setSelectedValue(window.location.href.split("=")[1]);
-      setSelectedValueMeasure(0);
-      setVideo([]);
-      getUser();
-    }
-  }, []);
+
 
   return (
     <>
@@ -76,7 +89,6 @@ function Home(props) {
                 </option>
               ))}
             </select>
-
 
             <div className="w-full flex h-10 bg-red-300">
               <button className="w-1/4 bg-gray-500 hover:bg-gray-400 h-full flex justify-center items-center justify-items-center text-white transition duration-500 ease-in-out text-xs md:text-sm lg:text-base xl:text-lg"
@@ -244,4 +256,4 @@ console.log(process.env.DEBUG_MODE);
 // Wrap the Home component with withAuth before exporting
 Home.displayName = 'Home';
 
-export default withAuth(Home);
+export default withAuth(Home,['admin','athlete']);

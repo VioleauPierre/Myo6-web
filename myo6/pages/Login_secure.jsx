@@ -47,7 +47,13 @@ export default function LoginPage(props) {
       if (response.ok) {
         const data = await response.json();
         sessionStorage.setItem('token', data.token);
-        router.push(`/coachPage?id_user=${data.id_user}`); // Redirigez l'utilisateur vers la page protégée
+        sessionStorage.setItem('role', data.role);
+        sessionStorage.setItem('id_user', data.id_user);
+        if (data.role === 'admin') {
+          router.push('/choixuser');  // Coach access page
+        } else if (data.role === 'athlete') {
+          router.push(`/coachPage?id_user=${data.id_user}`); // Redirigez l'utilisateur vers la page protégée
+        }
       } else {
         setErrorMessage('Email ou mot de passe incorrect');
       }
