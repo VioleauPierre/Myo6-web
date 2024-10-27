@@ -2,7 +2,7 @@ import withAuth from '../components/withAuth';
 import Header from '../components/Header'
 import Navbar from '../components/Navbar'
 import SideBar from '../components/SideBar'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Line as LineJS } from 'chart.js/auto'
 import {
@@ -49,75 +49,70 @@ function Home(props) {
   const [date , setDate] = useState("")
   const [area, setArea] = useState([]);
   const [showDiv, setShowDiv] = useState(false);
-  const [plateau_end, setPlateau_end] = useState(0);
-  const [plateau_start, setPlateau_start] = useState(0);
-  const [start_constriction, setStart_constriction] = useState(0);
-  
+  const [timestamp] = useState(new Date().getTime());
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
       {
         label: 'eye_area',
         data: [],
-        borderColor: 'rgba(107,   114,   128,   1)',
+        borderColor: 'rgba(0,   0,   140,   1)',
         backgroundColor: 'rgba(0,   113,   143,   1)',
       },
     ],
   });
-
-  const [options , setOptions] = useState({
-  
+  // Set this to the frame rate of your video
+  const [FRAME_RATE, setFRAME_RATE] = useState(0);
+  const [FRAME_DELAY, setFRAME_DELAY] = useState(0);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const videoRef = useRef(null);
+  const [options, setOptions] = useState({
     responsive: true,
     plugins: {
       legend: {
         position: 'top',
         display: false
-    },
-    tooltips: {
+      },
+      tooltips: {
         callbacks: {
-           label: function(tooltipItem) {
-                  return tooltipItem.yLabel;
-           }
+          label: function(tooltipItem) {
+            return tooltipItem.yLabel;
+          }
         }
-    },
+      },
       title: {
         display: true,
-        text: 'Aire de la pupille',
-      }, 
-      annotation: {
-        annotations: [
-          {
-            type: 'line',
-            mode: 'vertical',
-            scaleID: 'x',
-            value: plateau_start,
-            borderColor: 'red',
-            borderWidth: 2,
-            label: {
-              enabled: true,
-              content: 'Date importante',
-              position: 'start',
-            },
-          },
-        ],
+        text: 'Pupil area',
+        color: "#FF5000",
+        font: {
+          size: 20,}
       },
     },
     scales: {
       y: {
         min:   0, // Valeur minimale
-        suggestedMax: 30,
-      //  max:   50, // Valeur maximale
-        
+        // max:   Math.max(...data.map(item => item.area),), // Valeur maximale
+        suggestedMax: 20,
+        color: '#FF5000',
+        ticks: {
+          color: '#FF5000', // Set Y-axis ticks color to white
+        },
+        // max:   50, // Valeur maximale
       },
       x: {
         min:   0, // Valeur minimale
-        max:   270, // Valeur maximale
-  
+        max:   0, // Valeur maximale
+        color: '#FF5000',
+        ticks: {
+          color: '#FF5000',
+          stepSize: 1, // Step size of 1 ensures only integers appear on the x-axis
+          callback: (value) => Number.isInteger(value/FRAME_RATE) ? value/FRAME_RATE : null, // Show only integer labels
+        },
       },
       
     },
     animation: {
-      duration:  0, // Durée de l'animation pour chaque point
+      duration: 0.02,
     },
   });
 
@@ -150,64 +145,6 @@ function Home(props) {
       var trimmedString = jsonString.slice(0, -1);
       var area = trimmedString.split(",");
 
-
-      setPlateau_end(data.video.pupil_track.plateau_end);
-      setPlateau_start(data.video.pupil_track.plateau_start);
-      setStart_constriction(data.video.pupil_track.start_constriction);  
-
-
-      setOptions({
-        ...options,
-        plugins: {
-          ...options.plugins,
-          annotation: {
-            annotations: [
-              {
-                type: 'line',
-                mode: 'vertical',
-                scaleID: 'x',
-                value: plateau_start,
-                borderColor: 'red',
-                borderWidth: 2,
-                label: {
-                  enabled: true,
-                  content: 'Plateau start',
-                  position: 'start',
-                },
-              },
-              {
-                type: 'line',
-                mode: 'vertical',
-                scaleID: 'x',
-                value: plateau_end,
-                borderColor: 'green',
-                borderWidth: 2,
-                label: {
-                  enabled: true,
-                  content: 'Plateau end',
-                  position: 'start',
-                },
-              },
-              {
-                type: 'line',
-                mode: 'vertical',
-                scaleID: 'x',
-                value: start_constriction,
-                borderColor: 'blue',
-                borderWidth: 2,
-                label: {
-                  enabled: true,
-                  content: 'Start constriction',
-                  position: 'start',
-                },
-              },
-            ],
-          },
-        },
-      });
-      
-
-
       setArea(area);
       setVideo(data.video);
       var MyDate = data.video.date_record
@@ -225,44 +162,82 @@ function Home(props) {
       MyDate = MyDate.toString().replace(" Nov ", "/11/");
       MyDate = MyDate.toString().replace(" Dec ", "/12/");
       setDate(MyDate); 
-
-
+      setFRAME_RATE(data.video.pupil_track.fps);
+      setFRAME_DELAY(1000/FRAME_RATE);
     }
-
-    
+  
 
     getMyVideos();
-  }, [plateau_end, plateau_start, start_constriction]);
+  }, [FRAME_RATE, FRAME_DELAY]);
 
   useEffect(() => {
-    if (area.length >   0) {
-      let labels = Array.from({ length: area.length }, (_, i) => i);
+    if (area.length > 0 && isVideoReady) {
       let dataPoints = [];
+      const samplingRate = 2;
+      const sampledArea = area.filter((_, index) => index % samplingRate === 0);
+      
+      setOptions((prevOptions) => ({
+        ...prevOptions,
+        scales: {
+          ...prevOptions.scales,
+          x: {
+            ...prevOptions.scales.x,
+            max: (area.length/2) - 1,
+            ticks: {
+              color: '#FF5000',
+              stepSize: samplingRate,
+              callback: (value) => Number.isInteger(value/(FRAME_RATE/2)) ? value/(FRAME_RATE/2) : null,
+            },
+          },
+        },
+      }));
 
+      // Start both video and animation together
+      const startSync = () => {
+        if (videoRef.current) {
+          videoRef.current.play();
+          animateData(0);
+        }
+      };
+
+      let lastFrameTime = performance.now();
+      
       function animateData(index) {
-        if (index < area.length-0) {
-          dataPoints.push(area[index]);
-          setChartData({
-            //labels: labels.slice(0, index +   1),
-            labels: Array.from({ length: 270 }, (_, index) => ((index+1) / 30).toFixed(1)),
-            datasets: [
-              {
-                label: 'Aire de la pupille',
-                data: dataPoints,
-                borderColor: 'rgba(107,   114,   128,   1)',
-                backgroundColor: 'rgba(0,   113,   143,   1)',
-              },
-            ],
-          });
-
-          setTimeout(() => animateData(index +   1),   30);
+        const currentTime = performance.now();
+        const elapsed = currentTime - lastFrameTime;
+        
+        if (elapsed >= FRAME_DELAY) {
+          if (index < sampledArea.length) {
+            dataPoints.push(sampledArea[index]);
+            
+            setChartData({
+              labels: Array.from({ length: area.length }, (_, i) => i/FRAME_RATE),
+              datasets: [
+                {
+                  label: 'Pupil area',
+                  data: dataPoints,
+                  borderColor: "#FF5000",
+                  backgroundColor: "#FF5000",
+                  pointRadius: 2,
+                  borderWidth: 1.5,
+                  tension: 0.2,
+                },
+              ],
+            });
+            
+            lastFrameTime = currentTime;
+            requestAnimationFrame(() => animateData(index + 1));
+          }
+        } else {
+          requestAnimationFrame(() => animateData(index));
         }
       }
 
-      animateData(0);
+      // Start synchronization after a short delay to ensure video is loaded
+      const timer = setTimeout(startSync, 100);
+      return () => clearTimeout(timer);
     }
-  }, [area]);
-
+  }, [area, FRAME_RATE, FRAME_DELAY, isVideoReady]);
 
 
   return (
@@ -273,20 +248,18 @@ function Home(props) {
       
         <Navbar></Navbar>
       
-        <hr className="w-full h-[4px] bg-beige"></hr>
-      
-          <div className='flex  min-h-[calc(100%-68px)] bg-gray-300 h-auto '>
+          <div className='flex  min-h-[calc(100%-68px)] bg-gray-900 h-auto '>
           <div id="main_code" className="h-full  w-full ">
       
             <div className=" w-full p-2">
-              <div className="flex bg-white rounded-lg shadow-xl border-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-                  <div className="text-xl font-bold text-[#082431]">
+              <div className="text-xl font-bold text-[#082431] bg-gray-900 rounded-none shadow-xl w-full flex justify-center items-center justify-items-center">
+                  <div className="text-xl font-bold text-gray-100">
                     Mesure en Direct
                   </div>
                 </div>
       
             
-                <div className="text-lg p-4 font-bold text-[#082431]">
+                <div className="text-lg p-4 font-bold text-gray-100">
                     Vidéo n° 
                   {
                     video && video.id_video 
@@ -302,23 +275,30 @@ function Home(props) {
                 {/* <div className="w-full h-[10px] bg-transparent"></div> */}
       
                           
-                <div className="sm:flex">
-                  <div className=" sm:m-4  flex justify-center items-center justify-items-center w-auto sm:w-1/3 ">
-                    <div className="text-xl font-bold text-[#082431] bg-white rounded-none shadow-xl border-2 w-full  border-gray-400 flex justify-center items-center justify-items-center">
-                      <video  autoPlay muted>
-                        <source src="https://myo6.duckdns.org/api/video/last_video/video_traitement.mp4?t=${new Date().getTime()}" width="auto"/>
-                        </video>   
+                <div className="sm:flex justify-center items-center mt-4">
+                    {/* Video Section */}
+                    <div className="sm:m-4 flex justify-center items-center w-full sm:w-1/2">
+                      <div className="text-xl font-bold text-[#082431] bg-gray-900 rounded shadow-xl w-full flex justify-center items-center">
+                        <video 
+                          ref={videoRef}
+                          width="100%" 
+                          className="sm:w-full w-3/4" 
+                          muted
+                          onLoadedData={() => setIsVideoReady(true)}
+                          preload="auto"
+                        >
+                          <source src={`https://myo6.duckdns.org/api/video/last_video/video_traitement.mp4?t=${timestamp}`} />
+                        </video>
+                      </div>
+                    </div>
+
+                    {/* Plot Section */}
+                    <div className="sm:m-4 flex justify-center items-center w-full sm:w-1/2 h-full">
+                    <div className="text-xl font-bold text-white bg-gray-800 rounded-lg shadow-xl border-2 w-full h-[400px] sm:h-[500px] border-gray-700 flex justify-center items-center">
+                        {chartData && options && <Line data={chartData} options={options} />}
+                      </div>
                     </div>
                   </div>
-                  <div className="mt-4 sm:m-4 flex justify-center items-center justify-items-center w-auto sm:w-1/2 h-1/2 sm:h-auto">
-                    <div className="text-xl font-bold text-[#082431] bg-white rounded-lg shadow-xl border-2 w-full h-full border-gray-400 flex justify-center items-center justify-items-center">
-                      {
-                        chartData && options &&
-                        <Line data={chartData} options={options} />
-                      }
-                    </div>
-                  </div>
-                </div>
 
 
 
@@ -326,9 +306,9 @@ function Home(props) {
                 <div className={showDiv ? 'fadeIn' : 'fadeOut'}>
               
 
-                  <div className="sm:flex ">
-                    <div className="m-4 bg-white rounded-lg shadow-xl border-2 border-gray-400 w-auto sm:w-5/6 mx-auto">
-                      <div className="text-lg sm:text-2xl font-bold text-[#082431] text-center p-2">
+                <div className="sm:flex ">
+                    <div className="m-4 bg-gray-800 rounded-lg shadow-xl border-2 border-gray-700 w-auto sm:w-5/6 mx-auto">
+                      <div className="text-lg sm:text-2xl font text-white text-center p-2">
                           Résultats
                         </div>
 
@@ -337,15 +317,15 @@ function Home(props) {
 
 
                         <div className="text-base sm:text-lg w-full sm:w-auto mb-4 sm:mb-0">
-                          <div className="p-2 flex font-bold text-[#082431]">
-                            Temps de réaction:
+                          <div className="p-2 flex font text-white">
+                            Reaction time:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.reaction_time }
                             {'  '} 
                             s
                           </div>
-                          <div className="p-2 flex font-bold text-[#082431]">
-                          Temps de constriction:
+                          <div className="p-2 flex font text-white">
+                          Constriction time:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.time_constriction }
                             {'  '} 
@@ -355,15 +335,15 @@ function Home(props) {
 
 
                         <div className="text-md sm:text-lg w-full sm:w-auto mb-4 sm:mb-0">
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-                            Vitesse de constriction moyenne: 
+                          <div className="p-2 flex font text-white  ">
+                            Average constriction velocity: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.average_constriction_velocity }
                             {'  '} 
                             mm/s
                           </div>
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-                            Vitesse de constriction maximale: 
+                          <div className="p-2 flex font text-white  ">
+                            Max constriction velocity: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.max_constriction_velocity }
                             {'  '} 
@@ -372,16 +352,16 @@ function Home(props) {
                         </div>
 
                         <div className="text-md sm:text-lg w-full sm:w-auto">
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-                            Aire de la pupille minimale:
+                          <div className="p-2 flex font text-white  ">
+                            Min area:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.min_area }
                             
                             {'  '} 
                             mm²
                           </div>
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-                            Aire de la pupille maximale: 
+                          <div className="p-2 flex font text-white  ">
+                            Max area: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.max_area_dilation }
                             {'  '} 

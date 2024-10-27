@@ -286,8 +286,7 @@ export default function Home(props) {
     <>  
       <Header></Header>
       <div className="h-screen w-screen">
-        <hr className="w-full h-[4px] bg-beige"></hr>
-        <div className='flex min-h-[calc(100%-10px)] bg-gray-300 h-auto'>
+        <div className='flex min-h-[calc(100%-10px)] bg-gray-900 h-auto'>
           <div id="main_code" className="h-full w-full">
             <div className="w-full">   
               <div className='flex'>
@@ -295,7 +294,7 @@ export default function Home(props) {
                 <select 
                   value={selectedActivity} 
                   onChange={handleActivityChange}
-                  className="bg-white rounded-lg m-2 sm:m-4 w-auto shadow-xl border-2 border-gray-400 text-md sm:text-lg"
+                  className="bg-gray-300 rounded-lg m-2 sm:m-4 w-auto shadow-xl border-2 border-gray-400 text-md sm:text-lg"
                 >
                   <option value="">Sélectionnez une activité</option>
                   {sortedActivities.map((activity, index) => (
@@ -314,7 +313,7 @@ export default function Home(props) {
               </div>
               <div className="sm:flex">
                 <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-                  <div className="bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+                  <div className="bg-gray-300 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
                     <div className="text-2xl font-bold mb-4">
                       {showNewActivityForm ? 'Nouvelle Activité' : 'Activité'}
                     </div>

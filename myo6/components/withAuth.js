@@ -17,7 +17,7 @@ const withAuth = (WrappedComponent, allowedRoles = []) => {
       } else if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
         // If the user's role is not allowed for the page, redirect based on their role
         if (role === 'athlete') {
-          router.replace(`/coachPage?id_user=${id_user}`);
+          router.replace(`/coachPage5?id_user=${id_user}`);
         } else {
           router.replace('/'); // Default fallback for other roles (e.g., intern)
         }

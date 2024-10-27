@@ -256,17 +256,16 @@ export default function Home(props) {
   return (
     <>
       <div className="h-screen w-screen">
-        <hr className="w-full h-[4px] bg-beige"></hr>
-        <div className='flex  min-h-[calc(100%-84px)] bg-gray-300 h-auto '>
+        <div className='flex  min-h-[calc(100%-84px)] bg-gray-900 h-auto '>
 
           <div id="main_code" className="h-full  w-full ">
 
             <div className="sm:flex">
-            <div className="text-sm sm:text-lg font-bold text-[#082431] pl-4">
+            <div className="text-white sm:text-lg font text-md pl-4">
               Date : 
             
 
-              <input className="bg-white rounded-lg m-4 w-auto shadow-xl border-2 border-gray-400 text-sm sm:text-lg"
+              <input className="bg-gray-300 rounded-lg m-4 w-auto shadow-xl border-2 border-gray-300 text-gray-900 sm:text-lg"
                 type="date"
                 id="date"
                 name="date"
@@ -278,13 +277,13 @@ export default function Home(props) {
             </div>
 
 
-            <div className="pl-2 text-sm sm:text-lg">
+            <div className="pl-2 text-gray-300 sm:text-lg">
 *Champs Obligatoires
 </div>
 
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className=" bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className=" bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
       <p>Quel est votre poids aujourd&apos;hui ?</p>
@@ -301,7 +300,7 @@ export default function Home(props) {
 
 
 <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className=" bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className=" bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
       <p>À quelle heure vous êtes-vous endormi(e) hier soir ?</p>
@@ -316,7 +315,7 @@ export default function Home(props) {
     </div>
 
     <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className=" bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className=" bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
   <p>À quelle heure vous êtes-vous réveillé(e) ce matin ?</p>
   <input
@@ -330,7 +329,7 @@ export default function Home(props) {
 </div>
 
 <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-<div className=" bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+<div className=" bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
     <p>Temps de sommeil (en heures) :</p>
       <input
         type="time"
@@ -353,7 +352,7 @@ export default function Home(props) {
 
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
                 <form>
@@ -462,7 +461,7 @@ export default function Home(props) {
 
 
 <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto">
-  <div className="flex flex-col bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
     <p>Fréquence et variabilité cardiaque allongé</p>
     
     <div className="pt-3 flex flex-wrap justify-between">
@@ -531,7 +530,7 @@ export default function Home(props) {
 
 
 <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto">
-  <div className="flex flex-col bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
     <p>Fréquence et variabilité cardiaque debout</p>
     
     <div className="pt-3 flex flex-wrap justify-between">
@@ -590,7 +589,7 @@ export default function Home(props) {
 
 
 <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto">
-  <div className="flex flex-col bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-4">
+  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-4">
     <p>État de récupération*</p>
     
     <div className="pt-3 flex flex-col items-center">
@@ -636,7 +635,7 @@ export default function Home(props) {
 
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
                 <form>
@@ -755,7 +754,7 @@ export default function Home(props) {
 
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
                 <form>
@@ -872,7 +871,7 @@ export default function Home(props) {
 
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
                 <form>
@@ -924,7 +923,7 @@ export default function Home(props) {
 
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
                 <form>
@@ -986,7 +985,7 @@ export default function Home(props) {
 
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
                 <form>
@@ -1040,7 +1039,7 @@ export default function Home(props) {
 
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
                 <form>
@@ -1090,7 +1089,7 @@ export default function Home(props) {
 
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
                 <form>
@@ -1134,7 +1133,7 @@ export default function Home(props) {
             </div>
 
             <div className="flex w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-sky-600 text-center text-white rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+              <div className="flex bg-sky-600 text-center text-white rounded-lg shadow-xl border-2 mb-2 border-gray-900 p-2 justify-center items-center justify-items-center h-full">
             <button onClick={handleSubmit}>Envoyer</button>
             </div>
             </div>

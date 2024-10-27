@@ -65,17 +65,17 @@ function Home(props) {
       <div className="h-screen w-screen">
         <Navbar />
         <hr className="w-full h-[4px] bg-beige"></hr>
-        <div className='flex  min-h-[calc(100%-68px)] bg-gray-300 h-auto '>
+        <div className='flex  min-h-[calc(100%-68px)] bg-gray-900 h-auto '>
           <div id="main_code" className="h-full  w-full ">
             <div className="w-full p-2 ">
-              <div className="flex bg-white rounded-lg shadow-xl border-2 mb-6 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-                <div className="text-xl font-bold text-[#082431]">
-                  Choix Utilisateur
+              <div className="flex bg-gray-600 rounded-lg shadow-xl border-2 mb-6 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+                <div className="text-xl font text-white">
+                  Athlete
                 </div>
               </div>
             </div>
 
-            <h2 style={{ fontSize: '24px', marginLeft: '20px' }}>Mon équipe</h2>
+            
             <div className="flex justify-end mb-4 mr-4">
               <button
                 className="bg-bleugris text-white font-bold py-2 px-4 rounded"
@@ -90,9 +90,9 @@ function Home(props) {
                 ? sortedUsers.map((user) => (
                   <div
                     key={user.id_user}
-                    className="bg-white rounded-lg shadow-md m-2 p-4 flex flex-col items-center cursor-pointer "
+                    className="bg-gray-600 rounded-lg shadow-md m-2 p-4 flex flex-col items-center cursor-pointer "
                     onClick={() => {
-                      window.location.href = `/coachPage?id_user=${user.id_user}`;
+                      window.location.href = `/coachPage5?id_user=${user.id_user}`;
                     }}
                   >
                     <img
@@ -107,9 +107,9 @@ function Home(props) {
                 : users.map((user) => (
                   <div
                     key={user.id_user}
-                    className="bg-white rounded-lg shadow-md m-2 p-4 flex flex-col items-center cursor-pointer"
+                    className="bg-gray-100 rounded-lg shadow-md m-2 p-4 flex flex-col items-center cursor-pointer"
                     onClick={() => {
-                      window.location.href = `/coachPage?id_user=${user.id_user}`;
+                      window.location.href = `/coachPage5?id_user=${user.id_user}`;
                     }}
                   >
                     <img

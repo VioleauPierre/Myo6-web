@@ -1,7 +1,7 @@
 import Header from '../components/Header'
 import Navbar from '../components/Navbar'
 import SideBar from '../components/SideBar'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Line as LineJS } from 'chart.js/auto'
 import ReactPlayer from 'react-player';
@@ -45,11 +45,11 @@ export default function Home(props) {
   const [video, setVideo] = useState({});
   const [date , setDate] = useState("");
 
-  const [videoid, setVideoId] = useState();
+  const [videoid, setVideoId] = useState(2515);
   const [urlVideo , setUrlVideo] = useState("");
   const [urlVideoo , setUrlVideoo] = useState("");
   const [videoUrl, setVideoUrl] = useState("");
-
+  const [timestamp] = useState(new Date().getTime());
   const [userId, setUserId] = useState(null);
   const [videos, setVideos] = useState([]);
   const [selectedVideoId, setSelectedVideoId] = useState(null);
@@ -66,80 +66,77 @@ export default function Home(props) {
   const [plateau_end, setPlateau_end] = useState(0);
   const [plateau_start, setPlateau_start] = useState(0);
   const [start_constriction, setStart_constriction] = useState(0);
-  const verticalLineValues = [134];
-
+  const verticalLineValues = [plateau_end, plateau_start, start_constriction];
+  const [FRAME_RATE, setFRAME_RATE] = useState(30); // Default value
+  const [FRAME_DELAY, setFRAME_DELAY] = useState(1000/30);
+  const [isVideoReady, setIsVideoReady] = useState(false);
+  const videoRef = useRef(null);
 
   const [chartData, setChartData] = useState({
     labels: [],
-    datasets: [
-      {
-        label: 'eye_area',
-        data: [],
-        borderColor: 'rgba(0,   114,   128,   1)',
-        backgroundColor: 'rgba(0,   113,   143,   1)',
-      },
-    ],
+    datasets: [{
+      label: 'Pupil area',
+      data: [],
+      borderColor: "#FF5000",
+      backgroundColor: "#FF5000",
+      pointRadius: 2,
+      borderWidth: 1.5,
+      tension: 0.2,
+    }],
   });
 
 
 
-  const options = {
+  // Options de configuration du graphique
+  const [options, setOptions] = useState({
     responsive: true,
     plugins: {
       legend: {
         position: 'top',
-        display: true, // Enable the default legend
-        labels: {
-          generateLabels: (chart) => {
-            const labels = ChartJS.defaults.plugins.legend.labels.generateLabels(chart);
-            
-            // Adding a custom legend entry for "Light flash"
-            labels.push({
-              text: 'Light flash',
-              fillStyle: 'rgba(0, 110, 110, 0.3)', // Match the color of the vertical line
-              hidden: false,
-              lineWidth: 2,
-              strokeStyle: 'rgba(0, 110, 110, 0.3)', // Color of the line for the legend
-              pointStyle: 'line', // This can control the style (line or point)
-              index: labels.length, // Assign an index
-            });
-  
-            return labels;
-            
-          },font: {
-            size: 20,
-            weight: 'bold'}
+        display: false
+      },
+      tooltips: {
+        callbacks: {
+          label: function(tooltipItem) {
+            return tooltipItem.yLabel;
+          }
         }
       },
-      // title: {
-      //   display: true,
-      //   text: 'Pupil area',
-      // },
-      annotation: {
-        annotations: verticalLineValues.map((value, index) => ({
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x',
-          value: value,
-          borderColor: index === 0 ? 'rgba(0, 110, 110, 0.3)' : 'rgba(0, 0, 255, 0.3)', // Change second line color accordingly
-          borderWidth: 100,
-        })),
+      title: {
+        display: true,
+        text: 'Pupil area',
+        color: "#FF5000",
+        font: {
+          size: 20,}
       },
     },
     scales: {
       y: {
-        min: 0, // Valeur minimale
-        suggestedMax: 40, // Valeur maximale
+        min:   0, // Valeur minimale
+        // max:   Math.max(...data.map(item => item.area),), // Valeur maximale
+        suggestedMax: 20,
+        color: '#FF5000',
+        ticks: {
+          color: '#FF5000', // Set Y-axis ticks color to white
+        },
+        // max:   50, // Valeur maximale
       },
       x: {
-        min: 0, // Valeur minimale
-        max: 270, // Valeur maximale
+        min:   0, // Valeur minimale
+        max:   0, // Valeur maximale
+        color: '#FF5000',
+        ticks: {
+          color: '#FF5000',
+          stepSize: 1, // Step size of 1 ensures only integers appear on the x-axis
+          callback: (value) => Number.isInteger(value/FRAME_RATE) ? value/FRAME_RATE : null, // Show only integer labels
+        },
       },
+      
     },
     animation: {
-      duration: 0, // Durée de l'animation pour chaque point
+      duration: 0.02,
     },
-  };
+  });
 
 
 
@@ -208,7 +205,7 @@ export default function Home(props) {
     }
   }, []);
 
-    useEffect(() => {
+  useEffect(() => {
 
 
     async function getMyVideos() {
@@ -251,7 +248,8 @@ export default function Home(props) {
 
       setPosition(data.video_data.position);
       setExercice(data.video_data.exercice);
-
+      setFRAME_RATE(data.video_data.pupil_track.fps);
+      setFRAME_DELAY(1000/FRAME_RATE);
       setPlateau_end(data.video_data.pupil_track.plateau_end);
       setPlateau_start(data.video_data.pupil_track.plateau_start);
       setStart_constriction(data.video_data.pupil_track.start_constriction);  
@@ -261,39 +259,75 @@ export default function Home(props) {
     
 
     getMyVideos();
-  }, [plateau_end, plateau_start, start_constriction, videoid, selectedValueMeasure]);
+  }, [FRAME_RATE, FRAME_DELAY,plateau_end, plateau_start, start_constriction, videoid, selectedValueMeasure]);
 
 
 
 
   useEffect(() => {
-    if (area.length >   0) {
-      let labels = Array.from({ length: area.length }, (_, i) => i);
+    if (area.length > 0 && isVideoReady) {
       let dataPoints = [];
+      const samplingRate = 2;
+      const sampledArea = area.filter((_, index) => index % samplingRate === 0);
+      
+      setOptions(prevOptions => ({
+        ...prevOptions,
+        scales: {
+          ...prevOptions.scales,
+          x: {
+            ...prevOptions.scales.x,
+            max: (area.length/2) - 1,
+            ticks: {
+              color: '#FF5000',
+              stepSize: samplingRate,
+              callback: (value) => Number.isInteger(value/(FRAME_RATE/2)) ? value/(FRAME_RATE/2) : null,
+            },
+          },
+        },
+      }));
 
+      const startSync = () => {
+        if (videoRef.current) {
+          videoRef.current.play();
+          animateData(0);
+        }
+      };
+
+      let lastFrameTime = performance.now();
+      
       function animateData(index) {
-        if (index < area.length-0) {
-          dataPoints.push(area[index]);
-          setChartData({
-            //labels: labels.slice(0, index +   1),
-            labels: Array.from({ length: 270 }, (_, index) => ((index+1) / 30).toFixed(1)),
-            datasets: [
-              {
+        const currentTime = performance.now();
+        const elapsed = currentTime - lastFrameTime;
+        
+        if (elapsed >= FRAME_DELAY) {
+          if (index < sampledArea.length) {
+            dataPoints.push(sampledArea[index]);
+            
+            setChartData({
+              labels: Array.from({ length: area.length }, (_, i) => i/FRAME_RATE),
+              datasets: [{
                 label: 'Pupil area',
                 data: dataPoints,
-                borderColor: 'rgba(0,   114,   128,   1)',
-                backgroundColor: 'rgba(0,   113,   143,   1)',
-              },
-            ],
-          });
-
-          setTimeout(() => animateData(index +   1),   30);
+                borderColor: "#FF5000",
+                backgroundColor: "#FF5000",
+                pointRadius: 2,
+                borderWidth: 1.5,
+                tension: 0.2,
+              }],
+            });
+            
+            lastFrameTime = currentTime;
+            requestAnimationFrame(() => animateData(index + 1));
+          }
+        } else {
+          requestAnimationFrame(() => animateData(index));
         }
       }
 
-      animateData(0);
+      const timer = setTimeout(startSync, 100);
+      return () => clearTimeout(timer);
     }
-  }, [area]);
+  }, [area, FRAME_RATE, FRAME_DELAY, isVideoReady]);
 
 
 
@@ -325,11 +359,9 @@ export default function Home(props) {
 
       <div className=" h-screen w-screen">
       
-        
+    
       
-        <hr className="w-full h-[4px] bg-beige"></hr>
-      
-        <div className='flex  min-h-[calc(100%-10px)] bg-gray-300 h-auto '>
+        <div className='flex  min-h-[calc(100%-10px)] bg-gray-900 h-auto '>
       
       
         <div id="main_code" className="h-full  w-full ">
@@ -337,7 +369,7 @@ export default function Home(props) {
             <div className="w-full">
 
             {videos.length > 0 && (
-              <select value={selectedValueMeasure} onChange={handleSelectChangeMeasure} className="bg-white rounded-lg m-2 sm:m-4 w-auto shadow-xl border-2 border-gray-400 text-md sm:text-lg">
+              <select value={selectedValueMeasure} onChange={handleSelectChangeMeasure} className="bg-gray-700 text-white rounded-lg m-2 sm:m-4 w-auto shadow-xl border-gray-600 text-md sm:text-lg">
                 {videos.sort((a, b) => new Date(b.date_record) - new Date(a.date_record)).map(video => (
                   <option key={video.id_video} value={video.id_video}>
                     {/* {new Date(video.date_record).toLocaleString()} */}
@@ -347,7 +379,7 @@ export default function Home(props) {
               </select>
             )}
                
-                <div className="text-md sm:text-xl p-2 font-bold text-[#082431]">
+                <div className="text-md sm:text-xl p-4 font text-white">
                   
                     Vidéo n° 
                   {
@@ -361,94 +393,31 @@ export default function Home(props) {
                 </div>
       
             
-                          
-                <div className="sm:flex">
-                  <div className=" m-4  flex justify-center items-center justify-items-center w-auto sm:w-1/3 ">
-                    <div className="text-xl font-bold text-[#082431] bg-white rounded-none shadow-xl border-2 w-full  border-gray-400 flex justify-center items-center justify-items-center">
-                    <video autoPlay playsInline muted src={'https://myo6.duckdns.org/api/video/' + video.id_video + '/video_traitement.mp4'} type="video/mp4"></video>
-                    {/* <ReactPlayer url={'https://myo6.duckdns.org/api/video/' + video.id_video + '/video_traitement.mp4'} playing muted controls/> */}
-
-                    </div>
-                  </div>
-                  <div className="m-4 flex justify-center items-center justify-items-center w-auto sm:w-1/2 h-1/2 sm:h-auto">
-                    <div className="text-xl font-bold text-[#082431] bg-white rounded-lg shadow-xl border-2 w-full h-full border-gray-400 flex justify-center items-center justify-items-center">
-                      <Line data={chartData} options={options} />
-                    </div>
-                  </div>
-
-
-
-                  <div className="m-4  bg-white rounded-lg shadow-xl border-2  border-gray-400  justify-center items-center justify-items-center w-auto">
-                        <div className="text-lg sm:text-2xl flex font-bold text-[#082431] justify-center items-center justify-items-center">
-                          Tags 
-                        </div>
-
-                        <div className="sm:flex justify-center items-center justify-items-center text-center sm:text-left">
-
-
-                          <div className="text-md sm:text-lg">
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-
-                          
-                    <div className="w-auto p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-                      <div className="flex bg-white text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-                      <p> Position: </p>
-                        <select id="position" value={position} onChange={(e) => setPosition(e.target.value)} >
-                          <option value="None">Indeterminée</option>
-                          <option value="Lying">Couché</option>
-                          <option value="Sitting">Assis</option>
-                          <option value="Standing">Debout</option>
-                        </select>
-                  </div>
-                  </div>
-                          </div>
-
-
-
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-
-                          
-                  <div className="w-auto p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-                      <div className="flex bg-white text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-                      <p> Exercice: </p>
-                        <select id="exercice" value={exercice} onChange={(e) => setExercice(e.target.value)}>
-                          <option value="None">Indeterminé</option>
-                          <option value="Rest">Repos</option>
-                          <option value="Activity">Activité</option>
-                          <option value="Pre">Avant</option>
-                          <option value="Post">Après</option>
-                        </select>
-                  </div>
-                  </div>
-
-
-                  
-
-
-                          </div>
-                          <div className="flex w-full p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-                    {errorMessage && <div className="bg-red-500 text-white rounded-lg shadow-xl border-2 border-gray-400 p-2">{errorMessage}</div>}
-                    {submissionMessage && <div className="bg-green-500 text-white rounded-lg shadow-xl border-2 border-gray-400 p-2">{submissionMessage}</div>}
-                  </div>
-
-                  <div className="flex w-auto p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-                  <div className="flex bg-sky-600 text-center text-white rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-                    <button onClick={handleSubmit}>Envoyer les Tags</button>
-                  </div>
-                  </div>
-                        </div>
-
-                       </div>
-                      
+                <div className="sm:flex justify-center items-center mt-4">
+                    {/* Video Section */}
+                    <div className="sm:m-4 flex justify-center items-center w-full sm:w-1/2">
+                      <div className="text-xl font-bold text-[#082431] bg-gray-900 rounded shadow-xl w-full flex justify-center items-center">
+                        <video 
+                          ref={videoRef}
+                          width="100%" 
+                          className="sm:w-full w-3/4" 
+                          muted
+                          onLoadedData={() => setIsVideoReady(true)}
+                          preload="auto"
+                        >
+                          <source src={`https://myo6.duckdns.org/api/video/2515/video_traitement.mp4?t=${timestamp}`} />
+                        </video>
                       </div>
+                    </div>
 
-
-
-
+                    {/* Plot Section */}
+                    <div className="sm:m-4 flex justify-center items-center w-full sm:w-1/2 h-full">
+                    <div className="text-xl font-bold text-white bg-gray-800 rounded-lg shadow-xl border-2 w-full h-[400px] sm:h-[500px] border-gray-700 flex justify-center items-center">
+                        {chartData && options && <Line data={chartData} options={options} />}
+                      </div>
+                    </div>
+                  </div>        
                 
-
-
-                </div>
 
 
 
@@ -458,8 +427,8 @@ export default function Home(props) {
 
 
                 <div className="sm:flex ">
-                    <div className="m-4 bg-white rounded-lg shadow-xl border-2 border-gray-400 w-auto sm:w-5/6 mx-auto">
-                      <div className="text-lg sm:text-2xl font-bold text-[#082431] text-center p-2">
+                    <div className="m-4 bg-gray-800 rounded-lg shadow-xl border-2 border-gray-700 w-auto sm:w-5/6 mx-auto">
+                      <div className="text-lg sm:text-2xl font text-white text-center p-2">
                           Résultats
                         </div>
 
@@ -468,15 +437,15 @@ export default function Home(props) {
 
 
                         <div className="text-base sm:text-lg w-full sm:w-auto mb-4 sm:mb-0">
-                          <div className="p-2 flex font-bold text-[#082431]">
-                            Temps de réaction:
+                          <div className="p-2 flex font text-white">
+                            Reaction time:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.reaction_time }
                             {'  '} 
                             s
                           </div>
-                          <div className="p-2 flex font-bold text-[#082431]">
-                          Temps de constriction:
+                          <div className="p-2 flex font text-white">
+                          Constriction time:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.time_constriction }
                             {'  '} 
@@ -486,15 +455,15 @@ export default function Home(props) {
 
 
                         <div className="text-md sm:text-lg w-full sm:w-auto mb-4 sm:mb-0">
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-                            Vitesse de constriction moyenne: 
+                          <div className="p-2 flex font text-white  ">
+                            Average constriction velocity: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.average_constriction_velocity }
                             {'  '} 
                             mm/s
                           </div>
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-                            Vitesse de constriction maximale: 
+                          <div className="p-2 flex font text-white  ">
+                            Max constriction velocity: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.max_constriction_velocity }
                             {'  '} 
@@ -503,16 +472,16 @@ export default function Home(props) {
                         </div>
 
                         <div className="text-md sm:text-lg w-full sm:w-auto">
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-                            Aire de la pupille minimale:
+                          <div className="p-2 flex font text-white  ">
+                            Min area:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.min_area }
                             
                             {'  '} 
                             mm²
                           </div>
-                          <div className="p-2 flex font-bold text-[#082431]  ">
-                            Aire de la pupille maximale: 
+                          <div className="p-2 flex font text-white  ">
+                            Max area: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.max_area_dilation }
                             {'  '} 
