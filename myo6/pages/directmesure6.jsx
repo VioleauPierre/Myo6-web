@@ -199,7 +199,7 @@ function Home(props) {
           animateData(0);
         }
       };
-
+      let frameRequest;
       let lastFrameTime = performance.now();
       
       function animateData(index) {
@@ -235,7 +235,10 @@ function Home(props) {
 
       // Start synchronization after a short delay to ensure video is loaded
       const timer = setTimeout(startSync, 100);
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        cancelAnimationFrame(frameRequest); // Stop previous animations
+      };
     }
   }, [area, FRAME_RATE, FRAME_DELAY, isVideoReady]);
 
@@ -361,9 +364,9 @@ function Home(props) {
                             mm²
                           </div>
                           <div className="p-2 flex font text-white  ">
-                            Aire max: 
+                            Aire de référence: 
                             {'  '} 
-                            { video && video.measure_metric && video.measure_metric.max_area_dilation }
+                            { video && video.measure_metric && <video src="" className="measure_metric baseline"></video> }
                             {'  '} 
                             mm²
                           </div>

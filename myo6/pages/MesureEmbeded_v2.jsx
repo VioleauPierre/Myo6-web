@@ -218,6 +218,7 @@ export default function Home(props) {
       });
       const data = await res.json();
       console.log(data);
+
       var jsonString = JSON.stringify(data.video_data.pupil_track.area);
       var trimmedString = jsonString.slice(0, -1);
       var area = trimmedString.split(",");
@@ -230,6 +231,8 @@ export default function Home(props) {
 
       setArea(area);
       setVideo(data.video_data);
+      setVideoUrl(`https://myo6.duckdns.org/api/video/${videoid}/video_traitement.mp4?t=${timestamp}`);
+
       var MyDate = data.video_data.date_record
       MyDate = MyDate.toString().substring(5, MyDate.length - 7);
       MyDate = MyDate.toString().replace(" Jan ", "/01/");
@@ -292,7 +295,7 @@ export default function Home(props) {
           animateData(0);
         }
       };
-
+      let frameRequest;
       let lastFrameTime = performance.now();
       
       function animateData(index) {
@@ -325,7 +328,10 @@ export default function Home(props) {
       }
 
       const timer = setTimeout(startSync, 100);
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        cancelAnimationFrame(frameRequest); // Stop previous animations
+      };
     }
   }, [area, FRAME_RATE, FRAME_DELAY, isVideoReady]);
 
@@ -352,7 +358,13 @@ export default function Home(props) {
     }
   }
 
-
+  useEffect(() => {
+    if (videoRef.current && videoUrl) {
+      videoRef.current.load();
+      videoRef.current.play();
+    }
+  }, [videoUrl]);
+  
   return (
     <>  
       <Header></Header>
@@ -397,15 +409,17 @@ export default function Home(props) {
                     {/* Video Section */}
                     <div className="sm:m-4 flex justify-center items-center w-full sm:w-1/2">
                       <div className="text-xl font-bold text-[#082431] bg-gray-900 rounded shadow-xl w-full flex justify-center items-center">
-                        <video 
+                      <video 
                           ref={videoRef}
                           width="100%" 
                           className="sm:w-full w-3/4" 
                           muted
                           onLoadedData={() => setIsVideoReady(true)}
                           preload="auto"
+                          controls
                         >
-                          <source src={`https://myo6.duckdns.org/api/video/2515/video_traitement.mp4?t=${timestamp}`} />
+                          <source src={videoUrl} type="video/mp4" />
+                          Your browser does not support the video tag.
                         </video>
                       </div>
                     </div>
@@ -481,9 +495,9 @@ export default function Home(props) {
                             mm²
                           </div>
                           <div className="p-2 flex font text-white  ">
-                            Aire max: 
+                            Aire de référence: 
                             {'  '} 
-                            { video && video.measure_metric && video.measure_metric.max_area_dilation }
+                            { video && video.measure_metric && video.measure_metric.baseline }
                             {'  '} 
                             mm²
                           </div>
