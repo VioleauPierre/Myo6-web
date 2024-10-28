@@ -254,7 +254,7 @@ function Home(props) {
             <div className=" w-full p-2">
               <div className="text-xl font-bold text-[#082431] bg-gray-900 rounded-none shadow-xl w-full flex justify-center items-center justify-items-center">
                   <div className="text-xl font-bold text-gray-100">
-                    Last measure
+                    Dernière mesure
                   </div>
                 </div>
       
