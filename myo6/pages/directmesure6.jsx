@@ -254,12 +254,12 @@ function Home(props) {
             <div className=" w-full p-2">
               <div className="text-xl font-bold text-[#082431] bg-gray-900 rounded-none shadow-xl w-full flex justify-center items-center justify-items-center">
                   <div className="text-xl font-bold text-gray-100">
-                    Mesure en Direct
+                    Last measure
                   </div>
                 </div>
       
             
-                <div className="text-lg p-4 font-bold text-gray-100">
+                <div className="text-xl p-4 font text-gray-100">
                     Vidéo n° 
                   {
                     video && video.id_video 
@@ -309,7 +309,7 @@ function Home(props) {
                 <div className="sm:flex ">
                     <div className="m-4 bg-gray-800 rounded-lg shadow-xl border-2 border-gray-700 w-auto sm:w-5/6 mx-auto">
                       <div className="text-lg sm:text-2xl font text-white text-center p-2">
-                          Résultats
+                          Results
                         </div>
 
                         <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start text-center sm:text-left">

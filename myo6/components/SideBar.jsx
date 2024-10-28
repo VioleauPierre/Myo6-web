@@ -36,7 +36,7 @@ export default function SideBar({setISideBarOpen}) {
                         <div className="">
                             <img src="/assets/icons/documentation.svg" alt="Choix utilisateur" className="w-4 h-4 mr-1" />
                         </div>
-                        Choix Utilisateur
+                        My Team
                     </Link>              
                 </div>
                 <div className="justify-center items-center justify-items-center  text-white text-[12px]">
@@ -46,7 +46,7 @@ export default function SideBar({setISideBarOpen}) {
                         <div className="">
                             <img src="/assets/icons/settings.svg" alt="Mesure en direct" className="w-4 h-4 mr-1" />
                         </div>
-                        Mesure en direct
+                        Last measure
                     </Link>              
                 </div>
                 
