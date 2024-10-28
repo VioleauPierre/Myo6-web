@@ -121,7 +121,7 @@ function Home(props) {
     // Mettre en place un délai de 2 secondes avant d'afficher la div
     const timer = setTimeout(() => {
       setShowDiv(true);
-    }, 9500);
+    }, 1500);
 
     // Nettoyer le timer pour éviter les fuites de mémoire
     return () => clearTimeout(timer);
@@ -366,7 +366,7 @@ function Home(props) {
                           <div className="p-2 flex font text-white  ">
                             Aire de référence: 
                             {'  '} 
-                            { video && video.measure_metric && <video src="" className="measure_metric baseline"></video> }
+                            { video && video.measure_metric && video.measure_metric.baseline }
                             {'  '} 
                             mm²
                           </div>
