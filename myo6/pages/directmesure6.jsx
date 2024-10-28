@@ -82,7 +82,7 @@ function Home(props) {
       },
       title: {
         display: true,
-        text: 'Pupil area',
+        text: 'Aire de la pupille',
         color: "#FF5000",
         font: {
           size: 20,}
@@ -309,7 +309,7 @@ function Home(props) {
                 <div className="sm:flex ">
                     <div className="m-4 bg-gray-800 rounded-lg shadow-xl border-2 border-gray-700 w-auto sm:w-5/6 mx-auto">
                       <div className="text-lg sm:text-2xl font text-white text-center p-2">
-                          Results
+                      Résultats
                         </div>
 
                         <div className="flex flex-col sm:flex-row justify-center items-center sm:items-start text-center sm:text-left">
@@ -318,14 +318,14 @@ function Home(props) {
 
                         <div className="text-base sm:text-lg w-full sm:w-auto mb-4 sm:mb-0">
                           <div className="p-2 flex font text-white">
-                            Reaction time:
+                            Temps de réaction:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.reaction_time }
                             {'  '} 
                             s
                           </div>
                           <div className="p-2 flex font text-white">
-                          Constriction time:
+                          Durée myosis:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.time_constriction }
                             {'  '} 
@@ -336,14 +336,14 @@ function Home(props) {
 
                         <div className="text-md sm:text-lg w-full sm:w-auto mb-4 sm:mb-0">
                           <div className="p-2 flex font text-white  ">
-                            Average constriction velocity: 
+                            Vitesse moyenne de myosis: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.average_constriction_velocity }
                             {'  '} 
                             mm/s
                           </div>
                           <div className="p-2 flex font text-white  ">
-                            Max constriction velocity: 
+                            Vitesse max de myosis: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.max_constriction_velocity }
                             {'  '} 
@@ -353,7 +353,7 @@ function Home(props) {
 
                         <div className="text-md sm:text-lg w-full sm:w-auto">
                           <div className="p-2 flex font text-white  ">
-                            Min area:
+                            Aire min:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.min_area }
                             
@@ -361,7 +361,7 @@ function Home(props) {
                             mm²
                           </div>
                           <div className="p-2 flex font text-white  ">
-                            Max area: 
+                            Aire max: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.max_area_dilation }
                             {'  '} 

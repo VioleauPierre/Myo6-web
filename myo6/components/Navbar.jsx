@@ -41,7 +41,7 @@ export default function Navbar() {
 
                 <div className="flex justify-end items-center justify-items-center h-full w-full p-2">
 
-                    <Link href="/Help" className="text-white text-sm sm:text-xl pr-2  sm:pr-5">Help</Link>
+                    <Link href="/Help" className="text-white text-sm sm:text-xl pr-2  sm:pr-5">Aide</Link>
 
                     <Link href="/About" className="text-white text-sm sm:text-xl pr-2 sm:pr-5">A propos</Link>
 

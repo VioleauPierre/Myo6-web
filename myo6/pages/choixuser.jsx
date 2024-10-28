@@ -70,7 +70,7 @@ function Home(props) {
             <div className="w-full p-2 ">
               <div className="flex bg-gray-600 rounded-lg shadow-xl border-2 mb-6 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
                 <div className="text-2xl font text-white">
-                  Athlete
+                  Mon équipe
                 </div>
               </div>
             </div>

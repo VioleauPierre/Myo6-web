@@ -141,7 +141,7 @@ function Home(props) {
   const renderLegend = () => (
     <div style={{ display: 'flex', justifyContent: 'space-around', padding: '10px' }}>
       {/* <span style={{ color: '#ffc658' }}>Rest Heart Rate</span> */}
-      <span style={{ color: '#B22222' }}>VFC</span>
+      <span style={{ color: '#FF0000' }}>VFC</span>
       {/* <span style={{ color: '#82ca9d' }}>Mean Bounds</span> */}
     </div>
   );
@@ -174,7 +174,7 @@ function Home(props) {
           </select>
 
           <div className="w-full flex h-10 bg-gray-700">
-            {['Bilan', 'Mesures', 'Activités', 'Questionnaire'].map((tab, index) => (
+            {['Tableau de bord', 'Mesures', 'Activités', 'Questionnaires'].map((tab, index) => (
               <React.Fragment key={index}>
                 <button
                   className="w-1/4 bg-gray-800 hover:bg-gray-500 h-full flex justify-center items-center text-white transition duration-300 text-xs md:text-sm lg:text-base xl:text-lg"
@@ -197,7 +197,7 @@ function Home(props) {
               <Card className="bg-gray-800">
                   <div className="bg-gray-800 p-2">
                     <div className="bg-gray-800 p-4 text-center">
-                      <h3 className="text-white text-lg">Pupil index</h3>
+                      <h3 className="text-white text-lg">Pupillométrie</h3>
                     </div>
                     <CardContent>
                       <ResponsiveContainer width="100%" height={300}>
@@ -232,7 +232,7 @@ function Home(props) {
                               dataKey={() => pupillometryData.mean}
                               stroke="#D3D3D3 "
                               strokeDasharray="5 5"
-                              name="Mean"
+                              name="Moyenne"
                               dot={false}
                               connectNulls={true}
                             />
@@ -246,7 +246,7 @@ function Home(props) {
                 <Card className="bg-gray-800">
                   <div className="bg-gray-800 p-2">
                     <div className="bg-gray-800 p-4 text-center">
-                      <h3 className="text-white text-lg">Heart Rate Index</h3>
+                      <h3 className="text-white text-lg">Variabilité Fréquence Cardiaque</h3>
                     </div>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
@@ -287,6 +287,7 @@ function Home(props) {
                           name="VFC" 
                           connectNulls={true} 
                           dot={false}
+                          strokeWidth={2}
                         />
                         
                         {/* Line for mean (if necessary)
@@ -314,7 +315,7 @@ function Home(props) {
               <div className="bg-gray-800 p-2">
               <div className="bg-gray-800 p-4 text-center"> {/* Center the text */}
                 {/* Replace CardHeader with a custom header */}
-                <h3 className="text-white text-lg">Weekly Running Load</h3> {/* Adjust text size */}
+                <h3 className="text-white text-lg">Charge course à pied</h3> {/* Adjust text size */}
               </div>
               <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
@@ -323,7 +324,7 @@ function Home(props) {
                       <YAxis stroke="#888" />
                       <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none', color: '#fff' }} cursor={false}/>
                       <Legend />
-                      <Bar dataKey="Running Load" fill="#1E90FF" activeBar={false}/>
+                      <Bar dataKey="Charge hebdomadaire" fill="#1E90FF" activeBar={false}/>
                     </BarChart>
                   </ResponsiveContainer>
               </CardContent>
@@ -335,7 +336,7 @@ function Home(props) {
               <div className="bg-gray-800 p-2">
               <div className="bg-gray-800 p-4 text-center"> {/* Center the text */}
                 {/* Replace CardHeader with a custom header */}
-                <h3 className="text-white text-lg">Weekly Cycling Load</h3> {/* Adjust text size */}
+                <h3 className="text-white text-lg">Charge cyclisme</h3> {/* Adjust text size */}
               </div>
               <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
@@ -344,7 +345,7 @@ function Home(props) {
                       <YAxis stroke="#888" />
                       <Tooltip contentStyle={{ backgroundColor: '#333', border: 'none', color: '#fff' }} cursor={false}/>
                       <Legend />
-                      <Bar dataKey="Cycling Load" isAnimationActive={false} fill="#FF7F50"  />
+                      <Bar dataKey="Charge hebdomadaire" isAnimationActive={false} fill="#FF7F50"  />
                     </BarChart>
                   </ResponsiveContainer>
               </CardContent>
@@ -354,7 +355,7 @@ function Home(props) {
             <Card className="bg-gray-800">
               <div className="bg-gray-800 p-2">
                 <div className="bg-gray-800 p-4 text-center">
-                  <h3 className="text-white text-lg">Condition Physique</h3>
+                  <h3 className="text-white text-lg">Condition physique</h3>
                 </div>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>

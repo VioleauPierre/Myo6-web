@@ -104,7 +104,7 @@ export default function Home(props) {
       },
       title: {
         display: true,
-        text: 'Pupil area',
+        text: 'Aire de la pupille',
         color: "#FF5000",
         font: {
           size: 20,}
@@ -306,7 +306,7 @@ export default function Home(props) {
             setChartData({
               labels: Array.from({ length: area.length }, (_, i) => i/FRAME_RATE),
               datasets: [{
-                label: 'Pupil area',
+                label: 'Aire de la pupille',
                 data: dataPoints,
                 borderColor: "#FF5000",
                 backgroundColor: "#FF5000",
@@ -438,14 +438,14 @@ export default function Home(props) {
 
                         <div className="text-base sm:text-lg w-full sm:w-auto mb-4 sm:mb-0">
                           <div className="p-2 flex font text-white">
-                            Reaction time:
+                            Temps de réaction:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.reaction_time }
                             {'  '} 
                             s
                           </div>
                           <div className="p-2 flex font text-white">
-                          Constriction time:
+                          Durée myosis:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.time_constriction }
                             {'  '} 
@@ -456,14 +456,14 @@ export default function Home(props) {
 
                         <div className="text-md sm:text-lg w-full sm:w-auto mb-4 sm:mb-0">
                           <div className="p-2 flex font text-white  ">
-                            Average constriction velocity: 
+                            Vitesse moyenne de myosis: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.average_constriction_velocity }
                             {'  '} 
                             mm/s
                           </div>
                           <div className="p-2 flex font text-white  ">
-                            Max constriction velocity: 
+                            Vitesse max de myosis: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.max_constriction_velocity }
                             {'  '} 
@@ -473,7 +473,7 @@ export default function Home(props) {
 
                         <div className="text-md sm:text-lg w-full sm:w-auto">
                           <div className="p-2 flex font text-white  ">
-                            Min area:
+                            Aire min:
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.min_area }
                             
@@ -481,7 +481,7 @@ export default function Home(props) {
                             mm²
                           </div>
                           <div className="p-2 flex font text-white  ">
-                            Max area: 
+                            Aire max: 
                             {'  '} 
                             { video && video.measure_metric && video.measure_metric.max_area_dilation }
                             {'  '} 

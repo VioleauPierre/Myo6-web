@@ -25,7 +25,7 @@ export default function SideBar({setISideBarOpen}) {
                         <div className="">
                             <img src="/assets/icons/dash.svg" alt="Home" className="w-4 h-4 mr-1" />
                         </div>
-                        Home
+                        Accueil
                     </Link>              
                 </div>
                
@@ -36,7 +36,7 @@ export default function SideBar({setISideBarOpen}) {
                         <div className="">
                             <img src="/assets/icons/documentation.svg" alt="Choix utilisateur" className="w-4 h-4 mr-1" />
                         </div>
-                        My Team
+                        Mon équipe
                     </Link>              
                 </div>
                 <div className="justify-center items-center justify-items-center  text-white text-[12px]">
@@ -46,7 +46,7 @@ export default function SideBar({setISideBarOpen}) {
                         <div className="">
                             <img src="/assets/icons/settings.svg" alt="Mesure en direct" className="w-4 h-4 mr-1" />
                         </div>
-                        Last measure
+                        Dernière mesure
                     </Link>              
                 </div>
                 
