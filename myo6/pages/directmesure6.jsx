@@ -1,4 +1,4 @@
-import withAuth from '../components/withAuth';
+// import withAuth from '../components/withAuth';
 import Header from '../components/Header'
 import Navbar from '../components/Navbar'
 import SideBar from '../components/SideBar'
@@ -306,7 +306,7 @@ function Home(props) {
 
 
 
-                <div className={showDiv ? 'fadeIn' : 'fadeOut'}>
+                {/* <div className={showDiv ? 'fadeIn' : 'fadeOut'}>
               
 
                 <div className="sm:flex ">
@@ -378,7 +378,7 @@ function Home(props) {
                       
                       </div>
 
-                      </div>
+                      </div> */}
       </div>
     </div>
   </div>
@@ -396,4 +396,5 @@ console.log(process.env.DEBUG_MODE);
 
 Home.displayName = 'Home';
 
-export default withAuth(Home);
+// export default withAuth(Home);
+export default Home;

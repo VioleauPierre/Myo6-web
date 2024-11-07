@@ -50,20 +50,20 @@ export default function SideBar({setISideBarOpen}) {
                     </Link>              
                 </div>
                 
-                {/* <div className="justify-center items-center justify-items-center  text-white text-[12px]">
+                <div className="justify-center items-center justify-items-center  text-white text-[12px]">
                     
                     <Link className="shadow-md hover:shadow-xl  transition ease-in-out  duration-500  rounded bg-bleuclair py-2 px-4 my-3 w-full flex justify-start items-center justify-items-start "
                     href="createUser">
                         <div className="">
                             <img src="/assets/icons/documentation.svg" alt="Créer utilisateur" className="w-4 h-4 mr-1" />
                         </div>
-                        Créer Utilisateur
+                        Ajouter un Utilisateur
                     </Link>              
                 </div>
 
 
 
-                <div className="justify-center items-center justify-items-center  text-white text-[12px]">
+                {/* <div className="justify-center items-center justify-items-center  text-white text-[12px]">
                     
                     <Link className="shadow-md hover:shadow-xl  transition ease-in-out  duration-500  rounded bg-bleuclair py-2 px-4 my-3 w-full flex justify-start items-center justify-items-start "
                     href="questionnaire">
@@ -83,18 +83,18 @@ export default function SideBar({setISideBarOpen}) {
                         </div>
                         Associer son empreinte
                     </Link>              
-                </div>
+                </div>*/}
 
                 <div className="justify-center items-center justify-items-center  text-white text-[12px]">
                     
                     <Link className="shadow-md hover:shadow-xl  transition ease-in-out  duration-500  rounded bg-bleuclair py-2 px-4 my-3 w-full flex justify-start items-center justify-items-start "
                     href="qrcode">
                         <div className="">
-                            <img src="/assets/icons/documentation.svg" alt="Questionnaire" className="w-4 h-4 mr-1" />
+                            <img src="/assets/icons/documentation.svg" alt="Générer QR code" className="w-4 h-4 mr-1" />
                         </div>
                         Générer un QR code
                     </Link>              
-                </div> */}
+                </div> 
 
                 
 

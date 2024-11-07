@@ -17,21 +17,19 @@ export default function Home({  }) {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
-  const [emailAddress, setEmailAddress] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [sex, setSex] = useState(0);
-
+  const [role, setRole] = useState('');
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
+  const [sensorId, setSensorId] = useState('');
 
   const isFormValid = () => {
     if (
       !firstName ||
       !lastName ||
-      !password ||
-      !emailAddress ||
       !birthDate ||
+      !sensorId||
       !sex
     ) {
       return false;
@@ -67,9 +65,10 @@ export default function Home({  }) {
       // 'sex' : 'M'
       'firstname' : firstName,
       'lastname' : lastName,
-      'password' : password,
-      'email' : emailAddress,
+      'password' : '12345',
+      'role' : 'euromov',
       'birthdate' : birthDate,
+      'sensor_id' : sensorId,
       'sex' : sex
     };
     console.log(data_form);
@@ -95,7 +94,6 @@ export default function Home({  }) {
   };
 
 
-
   return (
     <>
     {/* <div className="flex-container"> */}
@@ -114,9 +112,6 @@ export default function Home({  }) {
                 </div>
               </div>
             </div>
-
-
-
 
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
               <div className="flex bg-white text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
@@ -153,42 +148,6 @@ export default function Home({  }) {
 
 
 
-    <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-      <p> Mot de passe : </p>
-  
-      <input
-        type="text"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Saisissez votre réponse"
-        style={{ width: '190px' }}
-      />
-    </div>
-    </div>
-
-
-
-    <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-white text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-      <p> Adresse Mail : </p>
-  
-      <input
-        type="text"
-        value={emailAddress}
-        onChange={(e) => setEmailAddress(e.target.value)}
-        placeholder="Saisissez votre réponse"
-        style={{ width: '190px' }}
-      />
-    </div>
-    </div>
-
-
-
 <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
               <div className="flex bg-white text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
@@ -204,14 +163,21 @@ export default function Home({  }) {
     </div>
     </div>
       
+  <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
+            <div className="flex bg-white text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
+    <p> ID Capteur : </p>
 
-
-
-
-
-
+    <input
+      type="number"
+      value={sensorId}
+      onChange={(e) => setSensorId(e.target.value)}
+      placeholder="Entrez l'ID du capteur"
+      style={{ width: '190px' }}
+    />
+  </div>
+  </div>
             <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
               <div className="flex bg-white text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
