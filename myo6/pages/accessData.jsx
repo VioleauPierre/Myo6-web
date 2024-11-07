@@ -1,4 +1,4 @@
-import withAuth from '../components/withAuth';
+// import withAuth from '../components/withAuth';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
 import { useEffect, useState } from 'react';
@@ -128,4 +128,4 @@ export async function getServerSideProps() {
 
 Home.displayName = 'Home';
 
-export default withAuth(Home);
+export default Home;
