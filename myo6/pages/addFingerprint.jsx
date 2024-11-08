@@ -92,7 +92,7 @@ export default function Home() {
           <button
             onClick={handleTestFunctionSubmit}
           >
-            Envoyer les données de test
+            Envoyer
           </button>
           </div>
           </div>
