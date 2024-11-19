@@ -282,316 +282,216 @@ export default function Home(props) {
 </div>
 
 
-            <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className=" bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
+{/* Section Sommeil */}
+<div className="w-full sm:w-1/2 max-w-5xl p-4 mx-auto flex flex-col items-center">
+  <div className="bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-4 border-bleugris p-4 w-full h-full">
+    <h2 className="text-lg sm:text-xl font-bold mb-4">Sommeil</h2>
 
-
-      <p>Quel est votre poids aujourd&apos;hui ?</p>
-      <input
-        type="text"
-        value={selectedWeight}
-        onChange={(e) => setSelectedWeight(e.target.value)}
-        placeholder="Saisissez votre réponse"
-        style={{ width: '210px' }}
-      />
-    </div>
-    </div>
-
-
-
-<div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className=" bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-      <p>À quelle heure vous êtes-vous endormi(e) hier soir ?</p>
+    {/* Bloc "À quelle heure vous êtes-vous endormi(e) hier soir ?" */}
+    <div className="mb-4 w-full flex flex-col items-center">
+      <h3 className="text-base sm:text-lg font-semibold mb-2">À quelle heure vous êtes-vous endormi(e) hier soir ?</h3>
       <input
         type="time"
         id="heure"
         name="heure"
         value={selectedAsleepTime}
         onChange={(e) => setSelectedAsleepTime(e.target.value)}
+        className="bg-white rounded-lg p-2 w-40 text-center"
       />
     </div>
+
+    {/* Bloc "À quelle heure vous êtes-vous réveillé(e) ce matin ?" */}
+    <div className="mb-4 w-full flex flex-col items-center">
+      <h3 className="text-base sm:text-lg font-semibold mb-2">À quelle heure vous êtes-vous réveillé(e) ce matin ?</h3>
+      <input
+        type="time"
+        id="heure"
+        name="heure"
+        value={selectedWakeupTime}
+        onChange={(e) => setSelectedWakeupTime(e.target.value)}
+        className="bg-white rounded-lg p-2 w-40 text-center"
+      />
     </div>
 
-    <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className=" bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-  <p>À quelle heure vous êtes-vous réveillé(e) ce matin ?</p>
-  <input
-    type="time"
-    id="heure"
-    name="heure"
-    value={selectedWakeupTime}
-    onChange={(e) => setSelectedWakeupTime(e.target.value)}
-  />
-</div>
-</div>
-
-<div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-<div className=" bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-    <p>Temps de sommeil (en heures) :</p>
+    {/* Bloc "Temps de sommeil (en heures) :" */}
+    <div className="mb-4 w-full flex flex-col items-center">
+      <h3 className="text-base sm:text-lg font-semibold mb-2">Temps de sommeil (en heures) :</h3>
       <input
         type="time"
         id="sleepDuration"
         name="sleepDuration"
         value={selectedSleepDuration}
         onChange={(e) => setSelectedSleepDuration(e.target.value)}
-        className="bg-white rounded-lg m-2 w-30 text-sm sm:text-lg"
+        className="bg-white rounded-lg p-2 w-40 text-center"
       />
     </div>
+
+    {/* Bloc "Quelle est votre qualité de sommeil ?" */}
+    <div className="w-full">
+      <h3 className="text-base sm:text-lg font-semibold mb-2">Quelle est votre qualité de sommeil ?*</h3>
+      <div className="flex justify-center items-center text-center">
+        <div className="pr-3 text-xs sm:text-lg">Excellent</div>
+
+        {/* Radio buttons for sleep quality */}
+        {[...Array(7)].map((_, index) => (
+          <div key={index} className="flex items-center mx-1">
+            <input
+              type="radio"
+              id={`quality${index + 1}`}
+              name="sleep_quality"
+              value={index + 1}
+              checked={selectedOptionSleepQuality === String(index + 1)}
+              onChange={(e) => setSelectedOptionSleepQuality(e.target.value)}
+              className="mx-1"
+            />
+            <label htmlFor={`quality${index + 1}`} className="text-sm">{index + 1}</label>
+          </div>
+        ))}
+
+        <div className="pl-3 text-xs sm:text-lg">Très mauvais</div>
+      </div>
+    </div>
   </div>
+</div>
 
 
 
 
 
 
-{/* SLEEP QUALITY */}
+{/* Section Données Cardiaques */}
+<div className="w-full sm:w-1/2 max-w-5xl p-4 mx-auto flex flex-col items-center">
+  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-4 border-bleugris p-4 w-full h-full min-h-[330px]">
+    <h2 className="text-lg sm:text-xl font-bold mb-4">Données cardiaques</h2>
+
+    {/* Bloc Fréquence et variabilité cardiaque allongé */}
+    <div className="w-full mb-4">
+      <h3 className="text-base sm:text-lg font-semibold mb-2">Fréquence et variabilité cardiaque allongé</h3>
+      <div className="pt-3 flex flex-wrap justify-between">
+        {[
+          { id: 'rmssdl', label: 'RMSSD', value: rmssdLying, setValue: setRmssdLying },
+          { id: 'lnrmssdl', label: 'LnRMSSD', value: lnrmssdLying, setValue: setLnrmssdLying },
+          { id: 'lfl', label: 'LF', value: lfLying, setValue: setLfLying },
+          { id: 'hfl', label: 'HF', value: hfLying, setValue: setHfLying },
+          { id: 'fcr', label: 'FC Repos', value: fcr, setValue: setFcr },
+        ].map(({ id, label, value, setValue }) => (
+          <div key={id} className="w-1/5 px-2">
+            <label htmlFor={id} className="block text-base">{label}</label>
+            <input
+              type="number"
+              id={id}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              step="0.01"
+              className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Bloc Fréquence et variabilité cardiaque debout */}
+    <div className="w-full mb-4">
+      <h3 className="text-base sm:text-lg font-semibold mb-2">Fréquence et variabilité cardiaque debout</h3>
+      <div className="pt-3 flex flex-wrap justify-between">
+        {[
+          { id: 'rmssds', label: 'RMSSD', value: rmssdStanding, setValue: setRmssdStanding },
+          { id: 'lnrmssds', label: 'LnRMSSD', value: lnrmssdStanding, setValue: setLnrmssdStanding },
+          { id: 'lfs', label: 'LF', value: lfStanding, setValue: setLfStanding },
+          { id: 'hfs', label: 'HF', value: hfStanding, setValue: setHfStanding },
+        ].map(({ id, label, value, setValue }) => (
+          <div key={id} className="w-1/5 px-2">
+            <label htmlFor={id} className="block text-base">{label}</label>
+            <input
+              type="number"
+              id={id}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              step="0.01"
+              className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
-            <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
 
 
-                <form>
-                  <p>Quelle est votre qualité de sommeil ?*</p>
+{/* Section Stress & Courbatures */}
+<div className="w-full sm:w-1/2 max-w-5xl p-4 mx-auto flex flex-col items-center">
+  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-4 border-bleugris p-4 w-full h-full">
+    <p className="text-xl font-semibold mb-4">Stress & Courbatures</p>
 
-                  <div className="pt-3 flex justify-center items-center justify-items-center text-center">
-                  <div className="pr-3 text-xs sm:text-lg">
-                    Excellent
-                    </div>
-
-
-                  <input
-                    type="radio"
-                    id="quality1"
-                    name="sleep_quality"
-                    value="1"
-                    checked={selectedOptionSleepQuality === '1'}
-                    onChange={(e) => setSelectedOptionSleepQuality(e.target.value)}
-                  />
-                  <label htmlFor="quality1">1</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="quality2"
-                    name="sleep_quality"
-                    value="2"
-                    checked={selectedOptionSleepQuality === '2'}
-                    onChange={(e) => setSelectedOptionSleepQuality(e.target.value)}
-                  />
-                  <label htmlFor="quality2">2</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="quality3"
-                    name="sleep_quality"
-                    value="3"
-                    checked={selectedOptionSleepQuality === '3'}
-                    onChange={(e) => setSelectedOptionSleepQuality(e.target.value)}
-                  />
-                  <label htmlFor="quality3">3</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="quality4"
-                    name="sleep_quality"
-                    value="4"
-                    checked={selectedOptionSleepQuality === '4'}
-                    onChange={(e) => setSelectedOptionSleepQuality(e.target.value)}
-                  />
-                  <label htmlFor="quality4">4</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="quality5"
-                    name="sleep_quality"
-                    value="5"
-                    checked={selectedOptionSleepQuality === '5'}
-                    onChange={(e) => setSelectedOptionSleepQuality(e.target.value)}
-                  />
-                  <label htmlFor="quality5">5</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="quality6"
-                    name="sleep_quality"
-                    value="6"
-                    checked={selectedOptionSleepQuality === '6'}
-                    onChange={(e) => setSelectedOptionSleepQuality(e.target.value)}
-                  />
-                  <label htmlFor="quality6">6</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="quality7"
-                    name="sleep_quality"
-                    value="7"
-                    checked={selectedOptionSleepQuality === '7'}
-                    onChange={(e) => setSelectedOptionSleepQuality(e.target.value)}
-                  />
-                  <label htmlFor="quality5">7</label>
-
-                  <div className="pl-3 text-xs sm:text-lg">
-                    Très mauvais
-                    </div>
-                  </div>
-
-
-
-                </form>
-
+    {/* Bloc Stress */}
+    <div className="w-full p-2">
+      <p className="text-lg font-medium">Quel est votre niveau de stress ce matin ?*</p>
+      <form>
+        <div className="pt-3 flex justify-center items-center text-center pl-8">
+          <div className="pr-3 text-xs sm:text-lg">Pas stressé</div>
+          {[...Array(7)].map((_, index) => {
+            const value = (index + 1).toString();
+            return (
+              <div key={value} className="flex items-center mx-1">
+                <input
+                  type="radio"
+                  id={`stress${value}`}
+                  name="stress"
+                  value={value}
+                  checked={selectedOptionStress === value}
+                  onChange={(e) => setSelectedOptionStress(e.target.value)}
+                />
+                <label htmlFor={`stress${value}`}>{value}</label>
               </div>
-            </div>
+            );
+          })}
+          <div className="pl-3 text-xs sm:text-lg">Très stressé</div>
+        </div>
+      </form>
+    </div>
 
+    {/* Ligne de séparation */}
+    <div className="my-4 w-full border-t border-gray-300"></div>
 
-
-<div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto">
-  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-    <p>Fréquence et variabilité cardiaque allongé</p>
-    
-    <div className="pt-3 flex flex-wrap justify-between">
-      <div className="w-1/5 px-2">
-        <label htmlFor="rmssdl" className="block text-base">RMSSD</label>
-        <input
-          type="number"
-          id="rmssdl"
-          value={rmssdLying}
-          onChange={(e) => setRmssdLying(e.target.value)}
-          step="0.01"
-          className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
-        />
-      </div>
-      
-      <div className="w-1/5 px-2">
-        <label htmlFor="lnrmssdl" className="block text-base">LnRMSSD</label>
-        <input
-          type="number"
-          id="lnrmssdl"
-          value={lnrmssdLying}
-          onChange={(e) => setLnrmssdLying(e.target.value)}
-          step="0.01"
-          className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
-        />
-      </div>
-      
-      <div className="w-1/5 px-2">
-        <label htmlFor="lfl" className="block text-base">LF</label>
-        <input
-          type="number"
-          id="lfl"
-          value={lfLying}
-          onChange={(e) => setLfLying(e.target.value)}
-          step="0.01"
-          className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
-        />
-      </div>
-      
-      <div className="w-1/5 px-2">
-        <label htmlFor="hfl" className="block text-base">HF</label>
-        <input
-          type="number"
-          id="hfl"
-          value={hfLying}
-          onChange={(e) => setHfLying(e.target.value)}
-          step="0.01"
-          className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
-        />
-      </div>
-
-      <div className="w-1/5 px-2">
-        <label htmlFor="fcr" className="block text-base">FC Repos</label>
-        <input
-          type="number"
-          id="fcr"
-          value={fcr}
-          onChange={(e) => setFcr(e.target.value)}
-          className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
-        />
-      </div>
+    {/* Bloc Courbatures */}
+    <div className="w-full p-2">
+      <p className="text-lg font-medium">Comment évaluez-vous votre niveau de douleurs musculaires/courbatures ce matin ?*</p>
+      <form>
+        <div className="pt-3 flex justify-center items-center text-center pl-8">
+          <div className="pr-3 text-xs sm:text-lg">Aucune</div>
+          {[...Array(7)].map((_, index) => {
+            const value = (index + 1).toString();
+            return (
+              <div key={value} className="flex items-center mx-1">
+                <input
+                  type="radio"
+                  id={`sore${value}`}
+                  name="muscle_sore"
+                  value={value}
+                  checked={selectedOptionMuscleSore === value}
+                  onChange={(e) => setSelectedOptionMuscleSore(e.target.value)}
+                />
+                <label htmlFor={`sore${value}`}>{value}</label>
+              </div>
+            );
+          })}
+          <div className="pl-3 text-xs sm:text-lg">Extrêmement élevé</div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
 
+{/* Section État de récupération */}
+<div className="w-full sm:w-1/2 max-w-5xl p-4 mx-auto mt-4 flex flex-col items-center">
+  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-4 border-bleugris p-4 w-full h-full">
+    {/* Titre principal */}
+    <p className="text-xl font-semibold mb-4">État de récupération</p>
 
-
-<div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto">
-  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2  border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-    <p>Fréquence et variabilité cardiaque debout</p>
-    
-    <div className="pt-3 flex flex-wrap justify-between">
-      <div className="w-1/5 px-2">
-        <label htmlFor="rmssds" className="block text-base">RMSSD</label>
-        <input
-          type="number"
-          id="rmssds"
-          value={rmssdStanding}
-          onChange={(e) => setRmssdStanding(e.target.value)}
-          step="0.01"
-          className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
-        />
-      </div>
-      
-      <div className="w-1/5 px-2">
-        <label htmlFor="lnrmssds" className="block text-base">LnRMSSD</label>
-        <input
-          type="number"
-          id="lnrmssds"
-          value={lnrmssdStanding}
-          onChange={(e) => setLnrmssdStanding(e.target.value)}
-          step="0.01"
-          className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
-        />
-      </div>
-      
-      <div className="w-1/5 px-2">
-        <label htmlFor="lfs" className="block text-base">LF</label>
-        <input
-          type="number"
-          id="lfs"
-          value={lfStanding}
-          onChange={(e) => setLfStanding(e.target.value)}
-          step="0.01"
-          className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
-        />
-      </div>
-      
-      <div className="w-1/5 px-2">
-        <label htmlFor="hfs" className="block text-base">HF</label>
-        <input
-          type="number"
-          id="hfs"
-          value={hfStanding}
-          onChange={(e) => setHfStanding(e.target.value)}
-          step="0.01"
-          className="mt-1 block w-full rounded-md border-2 border-gray-400 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-center"
-        />
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto">
-  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-4">
-    <p>État de récupération*</p>
-    
+    {/* Contenu */}
     <div className="pt-3 flex flex-col items-center">
       <div className="relative w-full">
         <input
@@ -627,505 +527,219 @@ export default function Home(props) {
 </div>
 
 
-{/* STRESS LEVEL */}
-
-
-
-
-
-
-            <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-                <form>
-                  <p>Quel est votre niveau de stress ce matin ?* </p>
-
-                  <div className="pt-3 flex justify-center items-center justify-items-center text-center pl-8">
-                  <div className="pr-3 text-xs sm:text-lg">
-                    Pas stressé
-                    </div>
-                    
 
-                  <input
-                    type="radio"
-                    id="stress1"
-                    name="stress"
-                    value="1"
-                    checked={selectedOptionStress === '1'}
-                    onChange={(e) => setSelectedOptionStress(e.target.value)}
-                  />
-                  <label htmlFor="stress1">1</label>
+{/* Section Autres */}
+<div className="w-full sm:w-1/2 max-w-5xl p-4 mx-auto flex flex-col items-center">
+  <div className="flex flex-col bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-4 border-bleugris p-4 w-full h-full">
+    {/* Titre principal */}
+    <p className="text-xl font-semibold mb-4">Autres</p>
+
+{/* Bloc Quel est votre poids aujourd'hui ? */}
+<div className="mb-4">
+  <p className="text-lg font-medium mb-2">Quel est votre poids aujourd'hui ?</p>
+  <input
+    type="text"
+    value={selectedWeight}
+    onChange={(e) => setSelectedWeight(e.target.value)}
+    placeholder="Saisissez votre réponse"
+    className="w-full sm:w-72 p-3 border border-gray-300 rounded-lg text-center"  // Ajout de 'text-center'
+  />
+</div>
+
+
+
+    {/* Ligne de séparation */}
+    <div className="my-4 w-full border-t border-gray-300"></div>
+
+    {/* Bloc Avez-vous une blessure ? */}
+    <div className="mb-4">
+      <p className="text-lg font-medium mb-2">Avez-vous une blessure ?</p>
+      <div className="flex justify-center items-center space-x-4">
+        <label className="flex items-center">
+          <input
+            type="radio"
+            id="injuried1"
+            name="injuried"
+            value="1"
+            checked={selectedOptionInjuried === '1'}
+            onChange={(e) => setSelectedOptionInjuried(e.target.value)}
+            className="mr-1"
+          />
+          Oui
+        </label>
+        <label className="flex items-center">
+          <input
+            type="radio"
+            id="injuried0"
+            name="injuried"
+            value="0"
+            checked={selectedOptionInjuried === '0'}
+            onChange={(e) => setSelectedOptionInjuried(e.target.value)}
+            className="mr-1"
+          />
+          Non
+        </label>
+      </div>
+    </div>
+
+    {/* Ligne de séparation */}
+    <div className="my-4 w-full border-t border-gray-300"></div>
+
+    {/* Bloc Avez-vous bu de l'alcool hier ? */}
+    <div className="mb-4">
+      <p className="text-lg font-medium mb-2">Avez-vous bu de l'alcool hier ?</p>
+      <div className="flex justify-center items-center space-x-4">
+        <label className="flex items-center">
+          <input
+            type="radio"
+            id="alcohol0"
+            name="alcohol"
+            value="0"
+            checked={selectedOptionAlcohol === '0'}
+            onChange={(e) => setSelectedOptionAlcohol(e.target.value)}
+            className="mr-1"
+          />
+          Non
+        </label>
+        <label className="flex items-center">
+          <input
+            type="radio"
+            id="alcohol1"
+            name="alcohol"
+            value="1"
+            checked={selectedOptionAlcohol === '1'}
+            onChange={(e) => setSelectedOptionAlcohol(e.target.value)}
+            className="mr-1"
+          />
+          Oui, 1 ou 2 verres
+        </label>
+        <label className="flex items-center">
+          <input
+            type="radio"
+            id="alcohol2"
+            name="alcohol"
+            value="2"
+            checked={selectedOptionAlcohol === '2'}
+            onChange={(e) => setSelectedOptionAlcohol(e.target.value)}
+            className="mr-1"
+          />
+          Oui, plus de 2 verres
+        </label>
+      </div>
+    </div>
+
+    {/* Ligne de séparation */}
+    <div className="my-4 w-full border-t border-gray-300"></div>
+
+    {/* bloc Avez-vous effectué un trajet de plus de 2h hier ? */}
+    <div className="mb-4">
+      <p className="text-lg font-medium mb-2">Avez-vous effectué un trajet de plus de 2h hier ?</p>
+      <div className="flex justify-center items-center space-x-4">
+        <label className="flex items-center">
+          <input
+            type="radio"
+            id="travel1"
+            name="travel"
+            value="1"
+            checked={selectedOptionTravel === '1'}
+            onChange={(e) => setSelectedOptionTravel(e.target.value)}
+            className="mr-1"
+          />
+          Oui
+        </label>
+        <label className="flex items-center">
+          <input
+            type="radio"
+            id="travel0"
+            name="travel"
+            value="0"
+            checked={selectedOptionTravel === '0'}
+            onChange={(e) => setSelectedOptionTravel(e.target.value)}
+            className="mr-1"
+          />
+          Non
+        </label>
+      </div>
+    </div>
+
+    {/* Ligne de séparation */}
+    <div className="my-4 w-full border-t border-gray-300"></div>
+
+    {/* Bloc Êtes-vous malade actuellement ? */}
+    <div className="mb-4">
+      <p className="text-lg font-medium mb-2">Êtes-vous malade actuellement ?</p>
+      <div className="flex justify-center items-center space-x-4">
+        <label className="flex items-center">
+          <input
+            type="radio"
+            id="sickness1"
+            name="sickness"
+            value="1"
+            checked={selectedOptionSickness === '1'}
+            onChange={(e) => setSelectedOptionSickness(e.target.value)}
+            className="mr-1"
+          />
+          Oui
+        </label>
+        <label className="flex items-center">
+          <input
+            type="radio"
+            id="sickness0"
+            name="sickness"
+            value="0"
+            checked={selectedOptionSickness === '0'}
+            onChange={(e) => setSelectedOptionSickness(e.target.value)}
+            className="mr-1"
+          />
+          Non
+        </label>
+      </div>
+    </div>
+
+{/* Ligne de séparation (visible uniquement si le genre est féminin) */}
+{selectedUserGender === 'F' && (
+  <div className="my-4 w-full border-t border-gray-300"></div>
+)}
+
+{/* Bloc Êtes-vous actuellement en période menstruelle ? (pour les femmes) */}
+{selectedUserGender === 'F' && (
+  <div className="mb-4">
+    <p className="text-lg font-medium mb-2">Êtes-vous actuellement en période menstruelle ?</p>
+    <div className="flex justify-center items-center space-x-4">
+      <label className="flex items-center">
+        <input
+          type="radio"
+          id="menstruation1"
+          name="menstruation"
+          value="1"
+          checked={selectedOptionMenstruation === '1'}
+          onChange={(e) => setSelectedOptionMenstruation(e.target.value)}
+          className="mr-1"
+        />
+        Oui
+      </label>
+      <label className="flex items-center">
+        <input
+          type="radio"
+          id="menstruation0"
+          name="menstruation"
+          value="0"
+          checked={selectedOptionMenstruation === '0'}
+          onChange={(e) => setSelectedOptionMenstruation(e.target.value)}
+          className="mr-1"
+        />
+        Non
+      </label>
+    </div>
+  </div>
+)}
+
+  </div>
+</div>
 
 
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="stress2"
-                    name="stress"
-                    value="2"
-                    checked={selectedOptionStress === '2'}
-                    onChange={(e) => setSelectedOptionStress(e.target.value)}
-                  />
-                  <label htmlFor="stress2">2</label>
 
 
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="stress3"
-                    name="stress"
-                    value="3"
-                    checked={selectedOptionStress === '3'}
-                    onChange={(e) => setSelectedOptionStress(e.target.value)}
-                  />
-                  <label htmlFor="stress3">3</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="stress4"
-                    name="stress"
-                    value="4"
-                    checked={selectedOptionStress === '4'}
-                    onChange={(e) => setSelectedOptionStress(e.target.value)}
-                  />
-                  <label htmlFor="stress4">4</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="stress5"
-                    name="stress"
-                    value="5"
-                    checked={selectedOptionStress === '5'}
-                    onChange={(e) => setSelectedOptionStress(e.target.value)}
-                  />
-                  <label htmlFor="stress5">5</label>
-
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="stress6"
-                    name="stress"
-                    value="6"
-                    checked={selectedOptionStress === '6'}
-                    onChange={(e) => setSelectedOptionStress(e.target.value)}
-                  />
-                  <label htmlFor="stress6">6</label>
-
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="stress7"
-                    name="stress"
-                    value="7"
-                    checked={selectedOptionStress === '7'}
-                    onChange={(e) => setSelectedOptionStress(e.target.value)}
-                  />
-                  <label htmlFor="stress7">7</label>
-
-                  <div className="pl-3 text-xs sm:text-lg">
-                    Très stessé
-                    </div>
-                  </div>
-
-                </form>
-
-              </div>
-            </div>
-
-
-
-
-            
-
-{/* MUSCLE SORENESS */}
-
-
-
-
-
-
-            <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-                <form>
-                  <p>Comment évaluez vous votre niveau de douleurs musculaires/courbatures ce matin ?* </p>
-
-                  <div className="pt-3 flex justify-center items-center justify-items-center text-center pl-8">
-                  <div className="pr-3 text-xs sm:text-lg">
-                    Aucune
-                    </div>
-
-                  <input
-                    type="radio"
-                    id="sore1"
-                    name="muscle_sore"
-                    value="1"
-                    checked={selectedOptionMuscleSore === '1'}
-                    onChange={(e) => setSelectedOptionMuscleSore(e.target.value)}
-                  />
-                  <label htmlFor="sore1">1</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="sore2"
-                    name="muscle_sore"
-                    value="2"
-                    checked={selectedOptionMuscleSore === '2'}
-                    onChange={(e) => setSelectedOptionMuscleSore(e.target.value)}
-                  />
-                  <label htmlFor="sore2">2</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="sore3"
-                    name="muscle_sore"
-                    value="3"
-                    checked={selectedOptionMuscleSore === '3'}
-                    onChange={(e) => setSelectedOptionMuscleSore(e.target.value)}
-                  />
-                  <label htmlFor="sore3">3</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="sore4"
-                    name="muscle_sore"
-                    value="4"
-                    checked={selectedOptionMuscleSore === '4'}
-                    onChange={(e) => setSelectedOptionMuscleSore(e.target.value)}
-                  />
-                  <label htmlFor="sore4">4</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="sore5"
-                    name="muscle_sore"
-                    value="5"
-                    checked={selectedOptionMuscleSore === '5'}
-                    onChange={(e) => setSelectedOptionMuscleSore(e.target.value)}
-                  />
-                  <label htmlFor="sore5">5</label>
-
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="sore6"
-                    name="muscle_sore"
-                    value="6"
-                    checked={selectedOptionMuscleSore === '6'}
-                    onChange={(e) => setSelectedOptionMuscleSore(e.target.value)}
-                  />
-                  <label htmlFor="sore6">6</label>
-
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="sore7"
-                    name="muscle_sore"
-                    value="7"
-                    checked={selectedOptionMuscleSore === '7'}
-                    onChange={(e) => setSelectedOptionMuscleSore(e.target.value)}
-                  />
-                  <label htmlFor="sore7">7</label>
-
-                  <div className="pl-3 text-xs sm:text-lg">
-                    Extrêmement élevé
-                    </div>
-                  </div>
-
-
-                </form>
-
-              </div>
-            </div>
-
-
-
-{/* INJURIED */}
-
-
-
-
-
-
-
-            <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-                <form>
-                  <p>Avez vous une blessure ? </p>
-
-                  <div className="pt-3 flex justify-center items-center justify-items-center text-center">
-
-                  <input
-                    type="radio"
-                    id="injuried1"
-                    name="injuried"
-                    value="1"
-                    checked={selectedOptionInjuried === '1'}
-                    onChange={(e) => setSelectedOptionInjuried(e.target.value)}
-                  />
-                  <label htmlFor="injuried1">Oui</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="injuried0"
-                    name="injuried"
-                    value="0"
-                    checked={selectedOptionInjuried === '0'}
-                    onChange={(e) => setSelectedOptionInjuried(e.target.value)}
-                  />
-                  <label htmlFor="injuried0">Non</label>
-
-                  </div>
-
-                </form>
-
-              </div>
-            </div>
-
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-            <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-                <form>
-                  <p>Avez vous bu de l&apos;alcool hier ? </p>
-
-                  <div className="pt-3 flex justify-center items-center justify-items-center text-center">
-
-                  <input
-                    type="radio"
-                    id="alcohol0"
-                    name="alcohol"
-                    value="0"
-                    checked={selectedOptionAlcohol === '0'}
-                    onChange={(e) => setSelectedOptionAlcohol(e.target.value)}
-                  />
-                  <label htmlFor="alcohol0">Non</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="alcohol1"
-                    name="alcohol"
-                    value="1"
-                    checked={selectedOptionAlcohol === '1'}
-                    onChange={(e) => setSelectedOptionAlcohol(e.target.value)}
-                  />
-                  <label htmlFor="alcohol1">Oui, 1 ou 2 verres</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="alcohol2"
-                    name="alcohol"
-                    value="2"
-                    checked={selectedOptionAlcohol === '2'}
-                    onChange={(e) => setSelectedOptionAlcohol(e.target.value)}
-                  />
-                  <label htmlFor="alcohol2">Oui, plus de 2 verres</label>
-
-                  </div>
-
-                </form>
-
-              </div>
-            </div>
-
-
-
-
-            
-
-
-
-
-
-            {selectedUserGender === 'F' && (
-
-
-            <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-                <form>
-                  <p>Etes vous actuellement en période menstruelle ? </p>
-
-                  <div className="pt-3 flex justify-center items-center justify-items-center text-center">
-
-                  <input
-                    type="radio"
-                    id="menstruation1"
-                    name="menstruation"
-                    value="1"
-                    checked={selectedOptionMenstruation === '1'}
-                    onChange={(e) => setSelectedOptionMenstruation(e.target.value)}
-                  />
-                  <label htmlFor="menstruation1">Oui</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="menstruation0"
-                    name="menstruation"
-                    value="0"
-                    checked={selectedOptionMenstruation === '0'}
-                    onChange={(e) => setSelectedOptionMenstruation(e.target.value)}
-                  />
-                  <label htmlFor="menstruation0">Non</label>
-
-                  </div>
-
-                </form>
-
-              </div>
-            </div>
-
-
-
-
-)
-
-}
-
-{selectedUserGender === 'M' && setSelectedOptionMenstruation === '0'}
-
-
-
-
-
-
-
-
-            <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-                <form>
-                  <p>Avez vous effectuer un trajet de plus de 2h hier ? </p>
-
-                  <div className="pt-3 flex justify-center items-center justify-items-center text-center">
-
-                  <input
-                    type="radio"
-                    id="travel1"
-                    name="travel"
-                    value="1"
-                    checked={selectedOptionTravel === '1'}
-                    onChange={(e) => setSelectedOptionTravel(e.target.value)}
-                  />
-                  <label htmlFor="travel1">Oui</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="travel0"
-                    name="travel"
-                    value="0"
-                    checked={selectedOptionTravel === '0'}
-                    onChange={(e) => setSelectedOptionTravel(e.target.value)}
-                  />
-                  <label htmlFor="travel0">Non</label>
-
-                  </div>
-
-                </form>
-
-              </div>
-            </div>
-
-
-
-
-            
-
-
-
-
-
-
-
-
-            <div className="w-full sm:w-1/2 p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
-              <div className="flex bg-gray-100 text-sm sm:text-lg text-center rounded-lg shadow-xl border-2 mb-2 border-gray-400 p-2 justify-center items-center justify-items-center h-full">
-
-
-                <form>
-                  <p>Etes vous malade actuellement ?  </p>
-
-                  <div className="pt-3 flex justify-center items-center justify-items-center text-center">
-
-                  <input
-                    type="radio"
-                    id="sickness1"
-                    name="sickness"
-                    value="1"
-                    checked={selectedOptionSickness === '1'}
-                    onChange={(e) => setSelectedOptionSickness(e.target.value)}
-                  />
-                  <label htmlFor="sickness1">Oui</label>
-
-
-                  {"  "}
-                  <input
-                    type="radio"
-                    id="sickness0"
-                    name="sickness"
-                    value="0"
-                    checked={selectedOptionSickness === '0'}
-                    onChange={(e) => setSelectedOptionSickness(e.target.value)}
-                  />
-                  <label htmlFor="sickness0">Non</label>
-
-                  </div>
-
-
-                </form>
-
-              </div>
-            </div>
 
             <div className="flex w-full p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
               {errorMessage && <div className="bg-red-500 text-white rounded-lg shadow-xl border-2 border-gray-400 p-2">{errorMessage}</div>}
