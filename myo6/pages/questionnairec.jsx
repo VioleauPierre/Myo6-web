@@ -741,6 +741,7 @@ export default function Home(props) {
 
 
 
+
             <div className="flex w-full p-2 justify-center items-center justify-items-center ml-auto mr-auto ">
               {errorMessage && <div className="bg-red-500 text-white rounded-lg shadow-xl border-2 border-gray-400 p-2">{errorMessage}</div>}
               {submissionMessage && <div className="bg-green-500 text-white rounded-lg shadow-xl border-2 border-gray-400 p-2">{submissionMessage}</div>}
