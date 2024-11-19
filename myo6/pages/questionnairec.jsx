@@ -536,7 +536,7 @@ export default function Home(props) {
 
 {/* Bloc Quel est votre poids aujourd'hui ? */}
 <div className="mb-4">
-  <p className="text-lg font-medium mb-2">Quel est votre poids aujourd'hui ?</p>
+  <p className="text-lg font-medium mb-2">Quel est votre poids aujourd&apos;hui ?</p>
   <input
     type="text"
     value={selectedWeight}
@@ -587,7 +587,7 @@ export default function Home(props) {
 
     {/* Bloc Avez-vous bu de l'alcool hier ? */}
     <div className="mb-4">
-      <p className="text-lg font-medium mb-2">Avez-vous bu de l'alcool hier ?</p>
+      <p className="text-lg font-medium mb-2">Avez-vous bu de l&apos;alcool hier ?</p>
       <div className="flex justify-center items-center space-x-4">
         <label className="flex items-center">
           <input
