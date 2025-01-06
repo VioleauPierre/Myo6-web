@@ -52,19 +52,19 @@ export default function Home() {
             {/* Section pour le texte explicatif */}
             <div className="w-full p-4 bg-white rounded-lg shadow-md border border-gray-300 mb-4">
               <h2 className="text-xl font-bold text-[#082431] mb-2">
-                Instructions pour l'utilisateur
+                Instructions pour l&apos;utilisateur
               </h2>
               <p className="text-gray-700 mb-2">
                 Veuillez suivre les étapes ci-dessous :
               </p>
               <ul className="list-disc pl-5 text-gray-700">
-                <li>Entrez l'<strong>ID Utilisateur</strong> dans le champ prévu à cet effet.</li>
-                <li>Ajoutez l'<strong>ID Capteur</strong> dans le deuxième champ.</li>
+                <li>Entrez l&apos;<strong>ID Utilisateur</strong> dans le champ prévu à cet effet.</li>
+                <li>Ajoutez l&apos;<strong>ID Capteur</strong> dans le deuxième champ.</li>
                 <li>Si vous avez terminé, cliquez sur le bouton <strong>"Envoyer"</strong> pour valider vos données.</li>
-                <li>Vous recevrez un message de confirmation ou d'erreur après l'envoi.</li>
-                <li>Vérifiez que <strong>le capteur est bien connecté à un réseau</strong> en appuyant sur le <strong>bouton rouge</strong>, si après quelques secondes l'anneau de LED clignote en vert, le capteur est connecté</li>
-                <li>Maintenez le <strong>bouton noir</strong> appuyé pendant + de 2 secondes (l'anneau de LED passe en orange clignotant) pour entrer dans le mode association</li>
-                <li>Posez le doigt à enregistrer sur le capteur d'empreinte jusqu'à ce que l'anneau de LED change de couleur</li>
+                <li>Vous recevrez un message de confirmation ou d&apos;erreur après l&apos;envoi.</li>
+                <li>Vérifiez que <strong>le capteur est bien connecté à un réseau</strong> en appuyant sur le <strong>bouton rouge</strong>, si après quelques secondes l&apos;anneau de LED clignote en vert, le capteur est connecté</li>
+                <li>Maintenez le <strong>bouton noir</strong> appuyé pendant + de 2 secondes (l&apos;anneau de LED passe en orange clignotant) pour entrer dans le mode association</li>
+                <li>Posez le doigt à enregistrer sur le capteur d'empreinte jusqu'à ce que l&apos;anneau de LED change de couleur</li>
               </ul>
             </div>
 
