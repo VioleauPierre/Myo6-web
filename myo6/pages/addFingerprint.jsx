@@ -60,7 +60,7 @@ export default function Home() {
               <ul className="list-disc pl-5 text-gray-700">
                 <li>Entrez l&apos;<strong>ID Utilisateur</strong> dans le champ prévu à cet effet.</li>
                 <li>Ajoutez l&apos;<strong>ID Capteur</strong> dans le deuxième champ.</li>
-                <li>Si vous avez terminé, cliquez sur le bouton <strong>"Envoyer"</strong> pour valider vos données.</li>
+                <li>Si vous avez terminé, cliquez sur le bouton <strong>&quot;Envoyer&quot;</strong> pour valider vos données.</li>
                 <li>Vous recevrez un message de confirmation ou d&apos;erreur après l&apos;envoi.</li>
                 <li>Vérifiez que <strong>le capteur est bien connecté à un réseau</strong> en appuyant sur le <strong>bouton rouge</strong>, si après quelques secondes l&apos;anneau de LED clignote en vert, le capteur est connecté</li>
                 <li>Maintenez le <strong>bouton noir</strong> appuyé pendant + de 2 secondes (l&apos;anneau de LED passe en orange clignotant) pour entrer dans le mode association</li>

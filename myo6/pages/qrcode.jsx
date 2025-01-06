@@ -123,7 +123,7 @@ function Home() {
                       <li><strong>Etape 3</strong> : Appuyer sur le bouton rouge pour déclencher la procédure de détection du QR Code. L&apos;anneau de LED clignote bleu foncé pendant la procédure</li>
                       <li><strong>Etape 4</strong> : Après quelques secondes, l&apos;anneau de LED clignotera en vert si le capteur est connecté à un réseau et retrouve ensuite son état statique (LED bleu ou verte fixe). La connexion peut prendre un peu plus longtemps.</li>
                       <li><strong>Test</strong> : Appuyer sur le bouton rouge, après quelques secondes,si l&apos;anneau de LED clignote en vert avant de redevenir statique alors le capteur est bien connecté à un réseau</li>
-                      <li><strong>A savoir</strong> : Il est parfois nécessaire d&apos;éteindre et rallumer le réseau ainsi que le capteur pour que la connexion s'effectue</li>
+                      <li><strong>A savoir</strong> : Il est parfois nécessaire d&apos;éteindre et rallumer le réseau ainsi que le capteur pour que la connexion s&apos;effectue</li>
                     </ul>
                   </p>
                 </div>
