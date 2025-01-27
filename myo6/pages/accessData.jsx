@@ -148,31 +148,25 @@ function Home(props) {
     const downloadVideoData = async (videoId) => {
         setDownloadStatus(prev => ({ ...prev, [videoId]: 'loading' }));
         setErrorMessage('');
-        
+
         try {
-            const response = await fetch(`https://myo6.duckdns.org/api/video/${videoId}/data`);
-            
+            const response = await fetch(`https://myo6.duckdns.org/api/video/${videoId}/data_xlsx`);
+
             if (response.ok) {
-                const data = await response.json();
-                
-                // Convertir les données en format JSON string
-                const jsonString = JSON.stringify(data.video_data, null, 2);
-                
-                // Créer un blob avec les données
-                const blob = new Blob([jsonString], { type: 'application/json' });
+                const blob = await response.blob();
                 const url = window.URL.createObjectURL(blob);
-                
+
                 // Créer un lien de téléchargement
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `video_${videoId}_data.json`;
+                a.download = `video_${videoId}_data.xlsx`; // Save as an Excel file
                 document.body.appendChild(a);
                 a.click();
-                
+
                 // Nettoyer
                 window.URL.revokeObjectURL(url);
                 document.body.removeChild(a);
-                
+
                 setDownloadStatus(prev => ({ ...prev, [videoId]: 'success' }));
                 setTimeout(() => {
                     setDownloadStatus(prev => ({ ...prev, [videoId]: null }));
@@ -183,14 +177,13 @@ function Home(props) {
         } catch (error) {
             console.error('Erreur:', error);
             setDownloadStatus(prev => ({ ...prev, [videoId]: 'error' }));
-            setErrorMessage(`Erreur lors du téléchargement de la vidéo ${videoId}`);
-            
+            setErrorMessage(`Erreur lors du téléchargement des données pour la vidéo ${videoId}`);
+
             setTimeout(() => {
                 setDownloadStatus(prev => ({ ...prev, [videoId]: null }));
             }, 2000);
         }
     };
-
     // Téléchargement des données pour toutes les vidéos sélectionnées
     const handleDownloadSelected = async () => {
         if (selectedVideos.length === 0) {
