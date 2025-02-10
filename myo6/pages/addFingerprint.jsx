@@ -62,8 +62,8 @@ export default function Home() {
                 <li>Ajoutez l&apos;<strong>ID Capteur</strong> dans le deuxième champ.</li>
                 <li>Si vous avez terminé, cliquez sur le bouton <strong>&quot;Envoyer&quot;</strong> pour valider vos données.</li>
                 <li>Vous recevrez un message de confirmation ou d&apos;erreur après l&apos;envoi.</li>
-                <li>Vérifiez que <strong>le capteur est bien connecté à un réseau</strong> en appuyant sur le <strong>bouton rouge</strong>, si après quelques secondes l&apos;anneau de LED clignote en vert, le capteur est connecté</li>
-                <li>Maintenez le <strong>bouton noir</strong> appuyé pendant + de 2 secondes (l&apos;anneau de LED passe en orange clignotant) pour entrer dans le mode association</li>
+                <li>Vérifiez que le capteur est bien connecté à un réseau en surveillant votre partage de connexion</li>
+                <li>Appuyer sur le <strong>bouton BLEU</strong>  (l&apos;anneau de LED passe en orange clignotant) pour entrer dans le mode association</li>
                 <li>Posez le doigt à enregistrer sur le capteur d&apos;empreinte jusqu&apos;à ce que l&apos;anneau de LED change de couleur</li>
               </ul>
             </div>

@@ -120,9 +120,7 @@ function Home() {
                       <li><strong>Type de cryptage</strong> : Choisissez le type de sécurité utilisé par votre réseau (WPA, WEP, etc.). Le plus courant est le WPA</li>
                       <li><strong>Etape 1</strong> : Renseigner les différents champs.</li>
                       <li><strong>Etape 2</strong> : Approcher le capteur avec la caméra face au QR Code.</li>
-                      <li><strong>Etape 3</strong> : Appuyer sur le bouton rouge pour déclencher la procédure de détection du QR Code. L&apos;anneau de LED clignote bleu foncé pendant la procédure</li>
-                      <li><strong>Etape 4</strong> : Après quelques secondes, l&apos;anneau de LED clignotera en vert si le capteur est connecté à un réseau et retrouve ensuite son état statique (LED bleu ou verte fixe). La connexion peut prendre un peu plus longtemps.</li>
-                      <li><strong>Test</strong> : Appuyer sur le bouton rouge, après quelques secondes,si l&apos;anneau de LED clignote en vert avant de redevenir statique alors le capteur est bien connecté à un réseau</li>
+                      <li><strong>Etape 3</strong> : Appuyer sur le bouton noir pour déclencher la procédure de détection du QR Code. L&apos;anneau de LED clignote bleu foncé pendant la procédure</li>
                       <li><strong>A savoir</strong> : Il est parfois nécessaire d&apos;éteindre et rallumer le réseau ainsi que le capteur pour que la connexion s&apos;effectue</li>
                     </ul>
                   </p>
@@ -145,10 +143,10 @@ function Home() {
                       <li><strong>SSID</strong> : Le nom du réseau Wi-Fi.</li>
                       <li><strong>Mot de passe</strong> : Le mot de passe du réseau.</li>
                       <li><strong>Type de cryptage</strong> : Le type de sécurité du réseau (WPA, WEP, etc.).</li>
-                      <li><strong>Etape 1</strong> : S&apos;asurer que le capteur est déjà connecté à un réseau en appuyant sur le bouton rouge et en attendant de voir les LED vertes clignotantes.</li>
+                      <li><strong>Etape 1</strong> : S&apos;asurer que le capteur est déjà connecté à un réseau.</li>
                       <li><strong>Etape 2</strong> : Renseigner les différents champs.</li>
                       <li><strong>Etape 3</strong> : Appuyer sur envoyer les paramètres au serveur. Si le message Success s&apos;affiche les paramètres sont bien renseignés sur le serveur.</li>
-                      <li><strong>Etape 4</strong> : Appuyer sur le bouton rouge pour permettre au capteur de récupérer les paramètres du réseau via le serveur.</li>
+                      <li><strong>Etape 4</strong> : Appuyer sur le bouton noir pour permettre au capteur de récupérer les paramètres du réseau via le serveur.</li>
                       <li><strong>Etape 5</strong> : Une fois les LED redevenues statiques, couper l&apos;ancien réseau wi-fi et redémarrer le capteur pour qu&apos;il se connecte au réseau nouvellement ajouté.</li>
                     </ul>
                   </p>
