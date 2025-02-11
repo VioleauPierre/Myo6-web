@@ -63,7 +63,7 @@ export default function Home() {
                 <li>Si vous avez terminé, cliquez sur le bouton <strong>&quot;Envoyer&quot;</strong> pour valider vos données.</li>
                 <li>Vous recevrez un message de confirmation ou d&apos;erreur après l&apos;envoi.</li>
                 <li>Vérifiez que le capteur est bien connecté à un réseau en surveillant votre partage de connexion</li>
-                <li>Appuyer sur le <strong>bouton BLEU</strong>  (l&apos;anneau de LED passe en orange clignotant) pour entrer dans le mode association</li>
+                <li>Appuyer sur le <strong>bouton BLEU</strong> pour les capteurs 4 à 6 ou <strong>bouton Noir + de 2 secondes</strong> pour le capteur 3 (l&apos;anneau de LED passe en orange clignotant) pour entrer dans le mode association</li>
                 <li>Posez le doigt à enregistrer sur le capteur d&apos;empreinte jusqu&apos;à ce que l&apos;anneau de LED change de couleur</li>
               </ul>
             </div>
