@@ -146,7 +146,7 @@ function Home() {
                       <li><strong>Etape 1</strong> : S&apos;asurer que le capteur est déjà connecté à un réseau.</li>
                       <li><strong>Etape 2</strong> : Renseigner les différents champs.</li>
                       <li><strong>Etape 3</strong> : Appuyer sur envoyer les paramètres au serveur. Si le message Success s&apos;affiche les paramètres sont bien renseignés sur le serveur.</li>
-                      <li><strong>Etape 4</strong> : Appuyer sur le bouton noir (capteur 4 à 6) ou rouge (capteur 3) pour permettre au capteur de récupérer les paramètres du réseau via le serveur.</li>
+                      <li><strong>Etape 4</strong> : Appuyer sur le <strong>bouton noir</strong> (capteur 4 à 6) ou <strong>rouge</strong> (capteur 3)pour permettre au capteur de récupérer les paramètres du réseau via le serveur.</li>
                       <li><strong>Etape 5</strong> : Une fois les LED redevenues statiques, couper l&apos;ancien réseau wi-fi et redémarrer le capteur pour qu&apos;il se connecte au réseau nouvellement ajouté.</li>
                     </ul>
                   </p>
