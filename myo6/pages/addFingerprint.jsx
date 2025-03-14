@@ -6,8 +6,8 @@ export default function Home() {
   const [userList, setUserList] = useState([]);
   const [filteredUserList, setFilteredUserList] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState('');
-  const [sensorId, setSensorId] = useState('');
-  const [selectedPhase, setSelectedPhase] = useState('phase2'); // Default to phase 2
+  const [sensorId, setSensorId] = useState('3'); // Default to sensor 3
+  const [selectedPhase, setSelectedPhase] = useState('commotion'); // Default to phase 2
   const [testSubmissionMessage, setTestSubmissionMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -36,6 +36,8 @@ export default function Home() {
       setFilteredUserList(userList.filter(user => user.role === 'euromov'));
     } else if (selectedPhase === 'phase2') {
       setFilteredUserList(userList.filter(user => user.role === 'euromov_p2'));
+    } else if (selectedPhase === 'commotion') {
+      setFilteredUserList(userList.filter(user => user.role === 'commotion'));
     } else {
       setFilteredUserList([]);
     }
@@ -132,6 +134,18 @@ export default function Home() {
                       className="form-radio h-4 w-4"
                     />
                     <label htmlFor="phase2" className="cursor-pointer">Phase 2</label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="radio"
+                      id="commotion"
+                      name="phase"
+                      value="commotion"
+                      checked={selectedPhase === 'commotion'}
+                      onChange={(e) => setSelectedPhase(e.target.value)}
+                      className="form-radio h-4 w-4"
+                    />
+                    <label htmlFor="commotion" className="cursor-pointer">Commotion</label>
                   </div>
                 </div>
               </div>

@@ -16,11 +16,11 @@ export default function Home({  }) {
   const [password, setPassword] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [sex, setSex] = useState(0);
-  const [phase, setPhase] = useState('');
+  const [phase, setPhase] = useState('3');
   const [role, setRole] = useState('');
   const [submissionMessage, setSubmissionMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [sensorId, setSensorId] = useState('');
+  const [sensorId, setSensorId] = useState('3');
 
   // Update role whenever phase changes
   useEffect(() => {
@@ -28,6 +28,8 @@ export default function Home({  }) {
       setRole('euromov');
     } else if (phase === '2') {
       setRole('euromov_p2');
+    } else if (phase === '3') {
+      setRole('commotion');
     }
   }, [phase]);
 
@@ -210,6 +212,16 @@ export default function Home({  }) {
                     onChange={(e) => setPhase(e.target.value)}
                   />
                   <label htmlFor="phase2">Phase 2</label>
+                  {"  "}
+                  <input
+                    type="radio"
+                    id="commotion"
+                    name="phase"
+                    value="3"
+                    checked={phase === '3'}
+                    onChange={(e) => setPhase(e.target.value)}
+                  />
+                  <label htmlFor="commotion">Commotion</label>
                 </form>
               </div>
             </div>
