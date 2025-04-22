@@ -202,6 +202,47 @@ function Home(props) {
     const filteredUsers = userList.filter(user => 
         roleFilter === 'all' || user.role === roleFilter
     );
+    // Téléchargement de toutes les données d'un utilisateur en un seul fichier
+
+    const downloadAllUserData = async () => {
+        if (!selectedUserId) {
+            setErrorMessage('Veuillez d\'abord sélectionner un utilisateur');
+            return;
+        }
+    
+        setErrorMessage('');
+        setDownloadStatus(prev => ({ ...prev, all: 'loading' }));
+    
+        try {
+            const response = await fetch(`https://myo6.duckdns.org/api/user/${selectedUserId}/all_data_xlsx`);
+    
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `user_${selectedUserId}_all_data.xlsx`;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+    
+                setDownloadStatus(prev => ({ ...prev, all: 'success' }));
+                setTimeout(() => {
+                    setDownloadStatus(prev => ({ ...prev, all: null }));
+                }, 2000);
+            } else {
+                throw new Error('Erreur lors du téléchargement');
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            setErrorMessage(`Erreur lors du téléchargement de toutes les données de l'utilisateur`);
+            setDownloadStatus(prev => ({ ...prev, all: 'error' }));
+            setTimeout(() => {
+                setDownloadStatus(prev => ({ ...prev, all: null }));
+            }, 2000);
+        }
+    };
 
     return (
         <>
@@ -248,6 +289,12 @@ function Home(props) {
                                         </option>
                                     ))}
                                 </select>
+                                    <button
+                                        onClick={downloadAllUserData}
+                                        className="bg-blue-600 text-white px-4 py-2 mt-4 rounded shadow hover:bg-blue-700 transition"
+                                    >
+                                        Télécharger toutes les données de l'utilisateur
+                                    </button>
                             </div>
                         </div>
 
