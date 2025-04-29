@@ -152,7 +152,9 @@ function Home(props) {
         setErrorMessage('');
 
         try {
-            const response = await fetch(`https://myo6.duckdns.org/api/video/${videoId}/data_xlsx`);
+            const isCommotion = roleFilter === 'commotion';
+            const extension = isCommotion ? 'csv' : 'xlsx';
+            const response = await fetch(`https://myo6.duckdns.org/api/video/${videoId}/data_${extension}`);
 
             if (response.ok) {
                 const blob = await response.blob();
@@ -161,7 +163,7 @@ function Home(props) {
                 // Créer un lien de téléchargement
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `video_${videoId}_data.xlsx`; // Save as an Excel file
+                a.download = `video_${videoId}_data.${extension}`; // Save as an Excel file
                 document.body.appendChild(a);
                 a.click();
 
@@ -203,6 +205,11 @@ function Home(props) {
         roleFilter === 'all' || user.role === roleFilter
     );
     // Téléchargement de toutes les données d'un utilisateur en un seul fichier
+    const uniqueVideoEntries = Array.from(
+        new Map(
+            videoData.ids.map((id, index) => [id, { id, date: videoData.dates[index] }])
+        ).values()
+    );
 
     const downloadAllUserData = async () => {
         if (!selectedUserId) {
@@ -335,76 +342,75 @@ function Home(props) {
                                          <div className="text-center py-4">Chargement...</div>
                                      ) : videoData.ids.length > 0 ? (
                                          <div className="space-y-2">
-                                             {videoData.ids.map((id, index) => (
-                                                 <div 
-                                         key={id}
-                                         className={`flex items-center justify-between p-3 rounded transition-colors duration-200 ${
-                                             selectedVideos.includes(id) 
-                                                 ? 'bg-blue-50 hover:bg-blue-100'
-                                                 : 'hover:bg-gray-100'
-                                         }`}
-                                     >
-                                         <div className="flex items-center">
-                                             <input
-                                                 type="checkbox"
-                                                 checked={selectedVideos.includes(id)}
-                                                 onChange={() => handleVideoSelection(id)}
-                                                 className="mr-4 h-5 w-5 text-blue-600"
-                                             />
-                                             <div className="flex flex-col">
-                                                 <span className="font-medium">
-                                                     Enregistrement #{id}
-                                                 </span>
-                                                 <span className="text-sm text-gray-600">
-                                                     Date : {formatDate(videoData.dates[index])}
-                                                 </span>
-                                             </div>
-                                         </div>
- 
-                                         <div className="flex space-x-2">
-                                             {/* Téléchargement des données */}
-                                             <button
-                                                 onClick={() => downloadVideoData(id)}
-                                                 className={`px-3 py-1 rounded text-white transition-colors ${
-                                                     downloadStatus[id] === 'loading'
-                                                         ? 'bg-gray-400'
-                                                         : downloadStatus[id] === 'success'
-                                                         ? 'bg-green-500'
-                                                         : downloadStatus[id] === 'error'
-                                                         ? 'bg-red-500'
-                                                         : 'bg-blue-500 hover:bg-blue-600'
-                                                 }`}
-                                                 disabled={downloadStatus[id] === 'loading'}
-                                             >
-                                                 {downloadStatus[id] === 'loading' ? 'Téléchargement...' :
-                                                 downloadStatus[id] === 'success' ? 'Données téléchargées' :
-                                                 downloadStatus[id] === 'error' ? 'Erreur' :
-                                                 'Télécharger données'}
-                                             </button>
- 
-                                             {/* Téléchargement vidéo */}
-                                             <button
-                                                 onClick={() => downloadVideoFile(id)}
-                                                 className={`px-3 py-1 rounded text-white transition-colors ${
-                                                     downloadStatus[id] === 'loading'
-                                                         ? 'bg-gray-400'
-                                                         : downloadStatus[id] === 'success'
-                                                         ? 'bg-green-500'
-                                                         : downloadStatus[id] === 'error'
-                                                         ? 'bg-red-500'
-                                                         : 'bg-blue-500 hover:bg-blue-600'
-                                                 }`}
-                                                 disabled={downloadStatus[id] === 'loading'}
-                                             >
-                                                 {downloadStatus[id] === 'loading' ? 'Téléchargement...' :
-                                                 downloadStatus[id] === 'success' ? 'Vidéo téléchargée' :
-                                                 downloadStatus[id] === 'error' ? 'Erreur' :
-                                                 'Télécharger vidéo'}
-                                             </button>
-                                         </div>
-                                     </div>
- 
-                                             ))}
+                                             {uniqueVideoEntries.map((entry) => (
+                                    <div key={entry.id} className={`flex items-center justify-between p-3 rounded transition-colors duration-200`}>
+                                        <div className="flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedVideos.includes(entry.id)}
+                                                onChange={() => handleVideoSelection(entry.id)}
+                                                className="mr-4 h-5 w-5 text-blue-600"
+                                            />
+                                            <div className="flex flex-col">
+                                                <span className="font-medium">
+                                                    Enregistrement #{entry.id}
+                                                </span>
+                                                <span className="text-sm text-gray-600">
+                                                    Date : {formatDate(entry.date)}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex space-x-2">
+                                            {/* Téléchargement des données */}
+                                            <button
+                                                onClick={() => downloadVideoData(entry.id)}
+                                                className={`px-3 py-1 rounded text-white transition-colors ${
+                                                    downloadStatus[entry.id] === 'loading'
+                                                        ? 'bg-gray-400'
+                                                        : downloadStatus[entry.id] === 'success'
+                                                        ? 'bg-green-500'
+                                                        : downloadStatus[entry.id] === 'error'
+                                                        ? 'bg-red-500'
+                                                        : 'bg-blue-500 hover:bg-blue-600'
+                                                }`}
+                                                disabled={downloadStatus[entry.id] === 'loading'}
+                                            >
+                                                {downloadStatus[entry.id] === 'loading'
+                                                    ? 'Téléchargement...'
+                                                    : downloadStatus[entry.id] === 'success'
+                                                    ? 'Données téléchargées'
+                                                    : downloadStatus[entry.id] === 'error'
+                                                    ? 'Erreur'
+                                                    : 'Télécharger données'}
+                                            </button>
+
+                                            {/* Téléchargement vidéo */}
+                                            <button
+                                                onClick={() => downloadVideoFile(entry.id)}
+                                                className={`px-3 py-1 rounded text-white transition-colors ${
+                                                    downloadStatus[entry.id] === 'loading'
+                                                        ? 'bg-gray-400'
+                                                        : downloadStatus[entry.id] === 'success'
+                                                        ? 'bg-green-500'
+                                                        : downloadStatus[entry.id] === 'error'
+                                                        ? 'bg-red-500'
+                                                        : 'bg-blue-500 hover:bg-blue-600'
+                                                }`}
+                                                disabled={downloadStatus[entry.id] === 'loading'}
+                                            >
+                                                {downloadStatus[entry.id] === 'loading'
+                                                    ? 'Téléchargement...'
+                                                    : downloadStatus[entry.id] === 'success'
+                                                    ? 'Vidéo téléchargée'
+                                                    : downloadStatus[entry.id] === 'error'
+                                                    ? 'Erreur'
+                                                    : 'Télécharger vidéo'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+
                                          </div>
                                      ) : (
                                          <div className="text-center py-4 text-gray-600">
