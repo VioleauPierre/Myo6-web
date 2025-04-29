@@ -123,16 +123,21 @@ function Home(props) {
     }, [selectedUserId]);
 
     // Formater la date pour l'affichage
+    // const formatDate = (dateString) => {
+    //     const date = new Date(dateString);
+    //     return new Intl.DateTimeFormat('fr-FR', {
+    //         day: '2-digit',
+    //         month: '2-digit',
+    //         year: 'numeric',
+    //         hour: '2-digit',
+    //         minute: '2-digit',
+    //         second: '2-digit'
+    //     }).format(date);
+    // };
+
     const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return new Intl.DateTimeFormat('fr-FR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        }).format(date);
+        // Si la date est déjà sous forme de chaîne, vous pouvez simplement la retourner
+        return dateString;
     };
 
     // Gestion de la sélection des vidéos
