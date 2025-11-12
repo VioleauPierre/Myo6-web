@@ -88,6 +88,17 @@ export default function SideBar({setISideBarOpen}) {
                 <div className="justify-center items-center justify-items-center  text-white text-[12px]">
                     
                     <Link className="shadow-md hover:shadow-xl  transition ease-in-out  duration-500  rounded bg-bleuclair py-2 px-4 my-3 w-full flex justify-start items-center justify-items-start "
+                    href="dataExports">
+                        <div className="">
+                            <img src="/assets/icons/documentation.svg" alt="Exports CSV" className="w-4 h-4 mr-1" />
+                        </div>
+                        Exports CSV
+                    </Link>              
+                </div>
+
+                <div className="justify-center items-center justify-items-center  text-white text-[12px]">
+                    
+                    <Link className="shadow-md hover:shadow-xl  transition ease-in-out  duration-500  rounded bg-bleuclair py-2 px-4 my-3 w-full flex justify-start items-center justify-items-start "
                     href="addFingerprint">
                         <div className="">
                             <img src="/assets/icons/documentation.svg" alt="Accès Data" className="w-4 h-4 mr-1" />
