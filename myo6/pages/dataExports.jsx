@@ -7,7 +7,7 @@ const DATASETS = [
     id: 'cf-perpignan',
     title: 'Data CF Perpignan',
     description:
-      'Historique des donnees pour CF Perpignan. Chaque mise a jour refletera la derniere extraction effectuee depuis le backend.',
+      'Historique des donnees pour CF Perpignan. Pas encore actif',
     metadataPath: '/api/data/cf-perpignan/status',
     downloadPath: '/api/data/cf-perpignan/download',
   },
@@ -15,7 +15,7 @@ const DATASETS = [
     id: 'hopital',
     title: 'Data Hopital',
     description:
-      'Exports CSV destines aux equipes hospitalieres. Le bouton ci-dessous declenchera le telechargement des donnees des que votre API sera disponible.',
+      'Exports CSV destines aux equipes hospitalieres.',
     metadataPath: '/api/data/hopital/status',
     downloadPath: '/api/data/hopital/download',
   },
@@ -158,8 +158,7 @@ export default function DataExports() {
             </h1>
             <p className="text-gray-600">
               Utilisez les cadres ci-dessous pour suivre les mises a jour et
-              telecharger les fichiers CSV. Les appels API sont deja prepares,
-              il suffira de renseigner les routes dans votre backend.
+              telecharger les fichiers CSV. 
             </p>
           </div>
 
