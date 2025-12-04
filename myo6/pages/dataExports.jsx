@@ -208,9 +208,6 @@ export default function DataExports() {
                         ? 'Telechargement...'
                         : 'Telecharger le CSV'}
                     </button>
-                    <p className="text-xs text-gray-500 text-center">
-                      Bouton pret pour votre API (GET {dataset.downloadPath})
-                    </p>
                   </div>
                 </div>
               );
