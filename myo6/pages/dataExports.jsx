@@ -5,18 +5,18 @@ import Navbar from '../components/Navbar';
 const DATASETS = [
   {
     id: 'cf-perpignan',
-    title: 'Data CF Perpignan',
+    title: 'Données CF Perpignan',
     description:
-      'Historique des donnees pour CF Perpignan. Pas encore actif',
+      'Historique des données pour CF Perpignan. Pas encore actif.',
     metadataPath: '/exports/cf-perpignan.json',
     downloadPath: '/exports/cf-perpignan.csv',
     downloadName: 'cf-perpignan.csv',
   },
   {
     id: 'hopital',
-    title: 'Data Hopital',
+    title: 'Données Hôpital',
     description:
-      'Exports CSV destines aux equipes hospitalieres.',
+      'Exports CSV destinés aux équipes hospitalières.',
     metadataPath: '/exports/hopital.json',
     downloadPath: '/exports/hopital.csv',
     downloadName: 'hopital.csv',
@@ -66,7 +66,7 @@ export default function DataExports() {
     try {
       const response = await fetch(dataset.metadataPath);
       if (!response.ok) {
-        throw new Error('Reponse metadata invalide');
+        throw new Error('Réponse de métadonnées invalide');
       }
 
       const payload = await response.json();
@@ -75,7 +75,7 @@ export default function DataExports() {
         ? new Intl.DateTimeFormat('fr-FR', DATE_FORMAT_OPTIONS).format(
             new Date(lastUpdatedRaw),
           )
-        : 'Non communique';
+        : 'Non communiqué';
 
       setDatasetState((prev) => ({
         ...prev,
@@ -93,7 +93,7 @@ export default function DataExports() {
           ...prev[dataset.id],
           lastUpdated: null,
           isLoadingMetadata: false,
-          error: "Metadata non disponible pour l'instant",
+          error: "Métadonnées non disponibles pour l'instant",
         },
       }));
     }
@@ -112,7 +112,7 @@ export default function DataExports() {
     try {
       const response = await fetch(dataset.downloadPath);
       if (!response.ok) {
-        throw new Error('Reponse fichier invalide');
+        throw new Error('Réponse du fichier invalide');
       }
 
       const blob = await response.blob();
@@ -130,7 +130,7 @@ export default function DataExports() {
         ...prev,
         [dataset.id]: {
           ...prev[dataset.id],
-          error: 'Erreur lors du telechargement. Verifiez le fichier CSV.',
+          error: 'Erreur lors du téléchargement. Vérifiez le fichier CSV.',
         },
       }));
     } finally {
@@ -156,8 +156,8 @@ export default function DataExports() {
               Portail des exports CSV
             </h1>
             <p className="text-gray-600">
-              Utilisez les cadres ci-dessous pour suivre les mises a jour et
-              telecharger les fichiers CSV. 
+              Utilisez les cadres ci-dessous pour suivre les mises à jour et
+              télécharger les fichiers CSV.
             </p>
           </div>
 
@@ -177,7 +177,7 @@ export default function DataExports() {
 
                     <div className="flex items-center justify-between bg-gray-100 border border-gray-200 rounded-lg px-4 py-3">
                       <span className="text-sm font-medium text-gray-700">
-                        Derniere mise a jour
+                        Dernière mise à jour
                       </span>
                       <span className="text-sm text-gray-900">
                         {datasetInfo?.isLoadingMetadata
@@ -204,8 +204,8 @@ export default function DataExports() {
                       }`}
                     >
                       {datasetInfo?.isDownloading
-                        ? 'Telechargement...'
-                        : 'Telecharger le CSV'}
+                        ? 'Téléchargement...'
+                        : 'Télécharger le CSV'}
                     </button>
                   </div>
                 </div>
