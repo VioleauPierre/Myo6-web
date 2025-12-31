@@ -8,16 +8,18 @@ const DATASETS = [
     title: 'Data CF Perpignan',
     description:
       'Historique des donnees pour CF Perpignan. Pas encore actif',
-    metadataPath: '/api/data/cf-perpignan/status',
-    downloadPath: '/api/data/cf-perpignan/download',
+    metadataPath: '/exports/cf-perpignan.json',
+    downloadPath: '/exports/cf-perpignan.csv',
+    downloadName: 'cf-perpignan.csv',
   },
   {
     id: 'hopital',
     title: 'Data Hopital',
     description:
       'Exports CSV destines aux equipes hospitalieres.',
-    metadataPath: '/api/data/hopital/status',
-    downloadPath: '/api/data/hopital/download',
+    metadataPath: '/exports/hopital.json',
+    downloadPath: '/exports/hopital.csv',
+    downloadName: 'hopital.csv',
   },
 ];
 
@@ -28,9 +30,6 @@ const DATE_FORMAT_OPTIONS = {
   hour: '2-digit',
   minute: '2-digit',
 };
-
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'https://myo6.duckdns.org';
 
 export default function DataExports() {
   const initialDatasetState = useMemo(() => {
@@ -65,9 +64,9 @@ export default function DataExports() {
     }));
 
     try {
-      const response = await fetch(`${API_BASE_URL}${dataset.metadataPath}`);
+      const response = await fetch(dataset.metadataPath);
       if (!response.ok) {
-        throw new Error('Reponse API invalide');
+        throw new Error('Reponse metadata invalide');
       }
 
       const payload = await response.json();
@@ -94,7 +93,7 @@ export default function DataExports() {
           ...prev[dataset.id],
           lastUpdated: null,
           isLoadingMetadata: false,
-          error: "API non disponible pour l'instant",
+          error: "Metadata non disponible pour l'instant",
         },
       }));
     }
@@ -111,9 +110,9 @@ export default function DataExports() {
     }));
 
     try {
-      const response = await fetch(`${API_BASE_URL}${dataset.downloadPath}`);
+      const response = await fetch(dataset.downloadPath);
       if (!response.ok) {
-        throw new Error('Reponse API invalide');
+        throw new Error('Reponse fichier invalide');
       }
 
       const blob = await response.blob();
@@ -121,7 +120,7 @@ export default function DataExports() {
 
       const link = document.createElement('a');
       link.href = url;
-      link.download = `${dataset.id}.csv`;
+      link.download = dataset.downloadName || `${dataset.id}.csv`;
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -131,7 +130,7 @@ export default function DataExports() {
         ...prev,
         [dataset.id]: {
           ...prev[dataset.id],
-          error: 'Erreur lors du telechargement. Verifiez votre API.',
+          error: 'Erreur lors du telechargement. Verifiez le fichier CSV.',
         },
       }));
     } finally {
