@@ -31,6 +31,10 @@ const DATE_FORMAT_OPTIONS = {
   minute: '2-digit',
 };
 
+const AUTH_STORAGE_KEY = 'dataExportsAuth';
+const AUTH_ID = 'commotion_pupillom\u00E9trie';
+const AUTH_PASSWORD = 'pupil_com_2026_!';
+
 export default function DataExports() {
   const initialDatasetState = useMemo(() => {
     return DATASETS.reduce((acc, dataset) => {
@@ -44,14 +48,33 @@ export default function DataExports() {
     }, {});
   }, []);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authIdentifier, setAuthIdentifier] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [authError, setAuthError] = useState('');
   const [datasetState, setDatasetState] = useState(initialDatasetState);
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const storedAuth = sessionStorage.getItem(AUTH_STORAGE_KEY);
+    if (storedAuth === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+
     DATASETS.forEach((dataset) => {
       fetchDatasetMetadata(dataset);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuthenticated]);
 
   const fetchDatasetMetadata = async (dataset) => {
     setDatasetState((prev) => ({
@@ -99,6 +122,23 @@ export default function DataExports() {
     }
   };
 
+  const handleAuthSubmit = (event) => {
+    event.preventDefault();
+
+    const normalizedIdentifier = authIdentifier.trim();
+    const isValid =
+      normalizedIdentifier === AUTH_ID && authPassword === AUTH_PASSWORD;
+
+    if (isValid) {
+      sessionStorage.setItem(AUTH_STORAGE_KEY, 'true');
+      setIsAuthenticated(true);
+      setAuthError('');
+      return;
+    }
+
+    setAuthError('Identifiant ou mot de passe incorrect.');
+  };
+
   const handleDownload = async (dataset) => {
     setDatasetState((prev) => ({
       ...prev,
@@ -143,6 +183,71 @@ export default function DataExports() {
       }));
     }
   };
+
+  if (!isAuthenticated) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen w-screen bg-gray-200">
+          <Navbar />
+          <hr className="w-full h-[4px] bg-beige" />
+          <div className="w-full max-w-lg mx-auto px-4 py-8">
+            <div className="bg-white rounded-lg shadow-xl border-2 border-gray-300 p-6">
+              <h1 className="text-2xl font-bold text-[#082431] mb-2">
+                Acces securise
+              </h1>
+              <p className="text-gray-600">
+                Identifiez-vous pour acceder aux exports CSV.
+              </p>
+              <form onSubmit={handleAuthSubmit} className="mt-6 space-y-4">
+                <div>
+                  <label
+                    htmlFor="auth-identifier"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Identifiant
+                  </label>
+                  <input
+                    id="auth-identifier"
+                    type="text"
+                    value={authIdentifier}
+                    onChange={(event) => setAuthIdentifier(event.target.value)}
+                    autoComplete="username"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="auth-password"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Mot de passe
+                  </label>
+                  <input
+                    id="auth-password"
+                    type="password"
+                    value={authPassword}
+                    onChange={(event) => setAuthPassword(event.target.value)}
+                    autoComplete="current-password"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  />
+                </div>
+                {authError && (
+                  <div className="text-sm text-red-600">{authError}</div>
+                )}
+                <button
+                  type="submit"
+                  className="w-full py-3 rounded-lg font-semibold text-white transition bg-[#082431] hover:bg-[#0b2f45]"
+                >
+                  Se connecter
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
