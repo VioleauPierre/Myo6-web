@@ -7,7 +7,7 @@ const DATASETS = [
     id: 'cf-perpignan',
     title: 'Données CF Perpignan',
     description:
-      'Historique des données pour CF Perpignan. Pas encore actif.',
+      'Historique des données pour CF Perpignan.',
     metadataPath: '/exports/cf-perpignan.json',
     downloadPath: '/exports/cf-perpignan.csv',
     downloadName: 'cf-perpignan.csv',
