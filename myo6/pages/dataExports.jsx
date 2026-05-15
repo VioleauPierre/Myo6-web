@@ -27,8 +27,8 @@ const DATASETS = [
     description:
       'Exports CSV destinés au groupe témoin.',
     metadataPath: '/exports/temoin.json',
-    downloadPath: '/exports/temoin.csv',
-    downloadName: 'temoin.csv',
+    downloadPath: '/exports/commotion_temoin.csv',
+    downloadName: 'commotion_temoin.csv',
   },
 ];
 
