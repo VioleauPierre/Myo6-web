@@ -21,6 +21,15 @@ const DATASETS = [
     downloadPath: '/exports/hopital.csv',
     downloadName: 'hopital.csv',
   },
+  {
+    id: 'temoin',
+    title: 'Données Témoin',
+    description:
+      'Exports CSV destinés au groupe témoin.',
+    metadataPath: '/exports/temoin.json',
+    downloadPath: '/exports/temoin.csv',
+    downloadName: 'temoin.csv',
+  },
 ];
 
 const DATE_FORMAT_OPTIONS = {
